@@ -1,8 +1,5 @@
 *.py[cod]
 
-# C extensions
-*.so
-
 # Packages
 *.egg
 *.egg-info
@@ -27,10 +24,9 @@ pip-log.txt
 .tox
 nosetests.xml
 
-# Translations
-*.mo
+# Virtual Environment
+.venv
 
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
+# Files I use for planning
+TODO
+DONE
