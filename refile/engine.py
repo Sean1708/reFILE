@@ -7,10 +7,16 @@ class Engine:
     def run(self):
         self.regex = re.compile(self.PATTERN)
         self.directory = pathlib.Path(self.DIR)
+        self.files = []
 
+        self.match_files()
         self.print_files()
 
-    def print_files(self):
+    def match_files(self):
         for f in self.directory.iterdir():
             if self.regex.search(f.name):
-                print(f)
+                self.files.append(f)
+
+    def print_files(self):
+        for f in self.files:
+            print(f)

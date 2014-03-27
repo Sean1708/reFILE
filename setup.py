@@ -7,10 +7,11 @@ config = {
     "author_email": "srm.1708@gmail.com",
     "url": "https://github.com/Sean1708/reFILE.git",
     "version": "0.0",
+    "install_requires": ["nose"],
     "packages": ["refile"],
-    "entry_points" = {
+    "entry_points": {
         ["refile = refile.cmdline:main"]
-    }
+    },
     "classifiers": [
         "Development Status :: 2 - Pre-Alpha",
         "Environment :: Console",
