@@ -24,12 +24,12 @@ def main():
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    print_cmd.set_defaults(cls=engine.Engine)
+    print_cmd.set_defaults(cls=engine.Printer)
 
     # parse the args and run selected command
     args = vars(parser.parse_args())
     cmd = args.pop('cls')
-    cmd(**args)
+    cmd(**args).run()
 
 
 if __name__ == '__main__':

@@ -4,19 +4,27 @@ import pathlib
 
 class Engine:
 
-    def __init__(self, PATTERN, DIR):
-        self.regex = re.compile(PATTERN)
+    def __init__(self, PATTERN, DIR, **kwargs):
+        self.regex = self.parse_regex(PATTERN)
         self.directory = pathlib.Path(DIR)
-        self.files = []
+        self.files = self.match_files()
 
-        self.match_files()
-        self.print_files()
+    def parse_regex(self, pattern):
+        return re.compile(pattern)
 
     def match_files(self):
+        files = []
         for f in self.directory.iterdir():
-            if self.regex.search(f.name):
-                self.files.append(f)
+            if self.regex.search(f.name): files.append(f)
 
-    def print_files(self):
+        return files
+
+    def run(self):
+        pass
+
+
+class Printer(Engine):
+
+    def run(self):
         for f in self.files:
             print(f)
