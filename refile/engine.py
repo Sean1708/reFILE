@@ -4,9 +4,9 @@ import pathlib
 
 class Engine:
 
-    def run(self):
-        self.regex = re.compile(self.PATTERN)
-        self.directory = pathlib.Path(self.DIR)
+    def __init__(self, PATTERN, DIR):
+        self.regex = re.compile(PATTERN)
+        self.directory = pathlib.Path(DIR)
         self.files = []
 
         self.match_files()
