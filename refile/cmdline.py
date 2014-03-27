@@ -1,9 +1,6 @@
 import sys
+import engine
 import argparse
-
-
-class Engine:
-    pass
 
 
 def main():
@@ -18,12 +15,11 @@ def main():
         'DIR',
         nargs='?',
         default='.',
-        help='directory to search for files (defaults to current directory)'
+        help='directory to search (defaults to current directory)'
     )
 
-    matcher = parser.parse_args(namespace=Engine())
-
-    print(vars(matcher))
+    matcher = parser.parse_args(namespace=engine.Engine())
+    matcher.run()
 
 
 if __name__ == '__main__':
