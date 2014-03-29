@@ -34,4 +34,22 @@ def test_match_files():
     for f in matcher.files:
         matched_files.append(f.name)
 
-    assert set(files) == set(matched_files)
+    assert_set_equal(set(files), set(matched_files))
+
+
+    matcher = Engine(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
+
+    matched_files = []
+    for f in matcher.files:
+        matched_files.append(f.name)
+
+    assert_set_equal(set(files[:4]), set(matched_files))
+
+
+    matcher = Engine(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory)
+
+    matched_files = []
+    for f in matcher.files:
+        matched_files.append(f.name)
+
+    assert_set_equal(set(files[2:]), set(matched_files))

@@ -18,17 +18,34 @@ def setup_print(subparsers):
     print_cmd.set_defaults(cls=engine.Printer)
 
 
+def setup_rename(subparsers):
+    rename = subparsers.add_parser(
+        'rename',
+        help='rename matching files according to replace string'
+    )
+    rename.add_argument('SEARCH', help='regex to match filenames against')
+    rename.add_argument('REPLACE', help='pattern to rename files')
+    rename.add_argument(
+        'DIR',
+        nargs='?',
+        default='.',
+        help='directory to search (defaults to current directory)'
+    )
+    rename.set_defaults(cls=engine.Renamer)
+
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description='''Interact with files whose names match the regular
-        expression PATTERN. See `pydoc refile` for comprehensive
-        documentation.'''
+        description='''Interact with files whose names match regular
+        expressions. See `pydoc refile` for comprehensive documentation.'''
     )
     subparsers = parser.add_subparsers(title='subcommands')
 
     setup_print(subparsers)
+    setup_rename(subparsers)
 
-    # get dictionary of the args
+    # get dictionary of the command line arguments
     args = vars(parser.parse_args())
     # no point telling the class which class it is, it already knows
     cmd = args.pop('cls')
