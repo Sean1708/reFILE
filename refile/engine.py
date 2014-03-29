@@ -1,4 +1,5 @@
 import re
+import sys
 import pathlib
 
 
@@ -31,6 +32,10 @@ class Printer(Engine):
 class Renamer(Engine):
 
     def run(self):
+        # if there are no groups in regex each file will overwrite previous
+        if not self.regex.groups:
+            sys.exit('Error: No groups present in regex.')
+
         for f in self.files:
             new_name = self.regex.sub(self.replace, f.name)
             # ensure file stays in same directory
