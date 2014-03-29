@@ -42,19 +42,22 @@ class Renamer(Engine):
             new_file = f.with_name(new_name)
             print('Rename: {0} -> {1}'.format(f, new_file))
 
-            rename = overwrite_guard(new_file)
+            rename = self.overwrite_guard(new_file)
             if rename: f.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
-            print('\tWarning: File {0} already exists!', end=' ')
+            print(
+                '  Warning: File {0} already exists!'.format(new_file),
+                end=' '
+            )
             overwrite = input('Overwrite (y/n)? ')[0].lower()
 
             if overwrite == 'y':
                 return True
             else:
                 if overwrite != 'n':
-                    print('\tInvalid option. File will not be overwritten.')
+                    print('    Invalid option. File will not be overwritten.')
                 return False
         else:
             # if it doesn't exist continue with the rename
