@@ -23,7 +23,7 @@ def setup_rename(subparsers):
         'rename',
         help='rename matching files according to replace string'
     )
-    rename.add_argument('SEARCH', help='regex to match filenames against')
+    rename.add_argument('PATTERN', help='regex to match filenames against')
     rename.add_argument('REPLACE', help='pattern to rename files')
     rename.add_argument(
         'DIR',

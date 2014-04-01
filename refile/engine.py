@@ -5,8 +5,8 @@ import pathlib
 
 class Engine:
 
-    def __init__(self, SEARCH, DIR, REPLACE=None, **kwargs):
-        self.regex = re.compile(SEARCH)
+    def __init__(self, PATTERN, DIR, REPLACE=None, **kwargs):
+        self.regex = re.compile(PATTERN)
         self.replace = REPLACE
         self.directory = pathlib.Path(DIR)
         self.files = self.match_files()
