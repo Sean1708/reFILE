@@ -5,7 +5,7 @@ import argparse
 
 def setup_print(subparsers):
     print_cmd = subparsers.add_parser(
-        'print',
+        'ls',
         help='print the names of files which match the regex pattern'
     )
     print_cmd.add_argument('PATTERN', help='regex to match filenames against')
@@ -20,7 +20,7 @@ def setup_print(subparsers):
 
 def setup_rename(subparsers):
     rename = subparsers.add_parser(
-        'rename',
+        'mv',
         help='rename matching files according to replace string'
     )
     rename.add_argument('PATTERN', help='regex to match filenames against')
@@ -36,7 +36,7 @@ def setup_rename(subparsers):
 
 def setup_delete(subparsers):
     delete = subparsers.add_parser(
-        'delete',
+        'rm',
         help='delete files which match the regex'
     )
     delete.add_argument('PATTERN', help='regex to match filenames against')
