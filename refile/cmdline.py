@@ -1,5 +1,5 @@
 import sys
-import engine
+import refile.engine
 import argparse
 
 
@@ -15,7 +15,7 @@ def setup_print(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    print_cmd.set_defaults(cls=engine.Printer)
+    print_cmd.set_defaults(cls=refile.engine.Printer)
 
 
 def setup_rename(subparsers):
@@ -31,7 +31,7 @@ def setup_rename(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    rename.set_defaults(cls=engine.Renamer)
+    rename.set_defaults(cls=refile.engine.Renamer)
 
 
 def setup_delete(subparsers):
@@ -46,7 +46,7 @@ def setup_delete(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    rename.set_defaults(cls=engine.Deleter)
+    delete.set_defaults(cls=refile.engine.Deleter)
 
 
 def main():
