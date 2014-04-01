@@ -29,6 +29,7 @@ class Printer(Engine):
         for f in self.files:
             print(f)
 
+
 class Renamer(Engine):
 
     def run(self):
@@ -62,3 +63,11 @@ class Renamer(Engine):
         else:
             # if it doesn't exist continue with the rename
             return True
+
+
+class Deleter(Engine):
+
+    def run(self):
+        for f in self.files:
+            if f.is_file():
+                f.unlink()

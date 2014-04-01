@@ -34,6 +34,20 @@ def setup_rename(subparsers):
     rename.set_defaults(cls=engine.Renamer)
 
 
+def setup_delete(subparsers):
+    delete = subparsers.add_parser(
+        'delete',
+        help='delete files which match the regex'
+    )
+    delete.add_argument('PATTERN', help='regex to match filenames against')
+    delete.add_argument(
+        'DIR',
+        nargs='?',
+        default='.',
+        help='directory to search (defaults to current directory)'
+    )
+    rename.set_defaults(cls=engine.Deleter)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -44,6 +58,7 @@ def main():
 
     setup_print(subparsers)
     setup_rename(subparsers)
+    setup_delete(subparsers)
 
     # get dictionary of the command line arguments
     args = vars(parser.parse_args())
