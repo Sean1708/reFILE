@@ -62,9 +62,17 @@ def main():
 
     # get dictionary of the command line arguments
     args = vars(parser.parse_args())
-    # no point telling the class which class it is, it already knows
-    cmd = args.pop('cls')
-    cmd(**args).run()
+    # running `python refile/cmdline.py` works as expected but once installed
+    # with entry_points running `refile` does not bring up the usual argparse
+    # error but instead keeps on running and raises KeyError since there is no
+    # cls if no subcommand has been selected
+    # this try statement gets around it but feels a bit hacky for my liking
+    try:
+        # no point telling the class which class it is, it already knows
+        cmd = args.pop('cls')
+        cmd(**args).run()
+    except KeyError:
+        parser.print_help()
 
 
 if __name__ == '__main__':
