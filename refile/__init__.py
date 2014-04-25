@@ -10,10 +10,10 @@ expression.
 
 Usage::
 
-    refile -h
-    refile ls [-h] PATTERN [DIR]
-    refile mv [-h] PATTERN REPLACE [DIR]
-    refile rm [-h] PATTERN [DIR]
+    $ refile -h
+    $ refile ls [-h] PATTERN [DIR]
+    $ refile mv [-h] PATTERN REPLACE [DIR]
+    $ refile rm [-h] PATTERN [DIR]
 
 
 General Advice
@@ -22,7 +22,7 @@ General Advice
 To avoid issues with variable expansion and special characters on the command
 line it is advisable to enclose the regular expression in single quotes::
 
-    refile ls '.*'
+    $ refile ls '.*'
 
 without the quotes this would cause a list of all files whose name starts with
 a period to be passed to ``refile`` which would, unsurprisingly, lead to
@@ -40,7 +40,7 @@ Listing Files
 
 Usage::
 
-    refile ls [-h] PATTERN [DIR]
+    $ refile ls [-h] PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -57,7 +57,7 @@ Renaming Files
 
 Usage::
 
-    refile mv [-h] PATTERN REPLACE [DIR]
+    $ refile mv [-h] PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -80,7 +80,7 @@ Deleting Files
 
 Usage::
 
-    refile rm [-h] PATTERN [DIR]
+    $ refile rm [-h] PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the
