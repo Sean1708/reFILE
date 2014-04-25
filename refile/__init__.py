@@ -8,7 +8,8 @@ files; listing files which match a regular expression, renaming files which
 matche a regular expression and deleting files which match a regular
 expression.
 
-::
+Usage::
+
     refile -h
     refile ls [-h] PATTERN [DIR]
     refile mv [-h] PATTERN REPLACE [DIR]
