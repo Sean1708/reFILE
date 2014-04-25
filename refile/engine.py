@@ -33,12 +33,6 @@ class Printer(Engine):
 class Renamer(Engine):
 
     def run(self):
-        # if there are no groups in regex each file will overwrite previous
-        if not self.regex.groups:
-            # there's probably a better way to get colour in
-            print('\033[31mError: No groups present in regex.\033[0m')
-            sys.exit()
-
         for f in self.files:
             new_name = self.regex.sub(self.replace, f.name)
             # ensure file stays in same directory
@@ -60,7 +54,7 @@ class Renamer(Engine):
                 return True
             else:
                 if overwrite != 'n':
-                    print('    Invalid option. File will not be overwritten.')
+                    print('  Invalid option. File will not be overwritten.')
                 return False
         else:
             # if it doesn't exist continue with the rename
