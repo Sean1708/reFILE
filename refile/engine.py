@@ -35,7 +35,9 @@ class Renamer(Engine):
     def run(self):
         # if there are no groups in regex each file will overwrite previous
         if not self.regex.groups:
-            sys.exit('Error: No groups present in regex.')
+            # there's probably a better way to get colour in
+            print('\033[31mError: No groups present in regex.\033[0m')
+            sys.exit()
 
         for f in self.files:
             new_name = self.regex.sub(self.replace, f.name)

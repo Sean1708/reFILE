@@ -1,7 +1,16 @@
-"""List, rename and delete files using Python-style regex.
+======
+reFILE
+======
+
+List, rename and delete files using Python-style regex.
 
 **THIS PROGRAM IS STILL IN THE ALPHA TESTING STAGE SO PLEASE ENSURE THAT YOU
 KEEP REGULAR BACKUPS AND DO NOT USE IT ON ANY IMPORTANT DOCUMENTS OR FILES**
+
+
+-------------
+Documentation
+-------------
 
 The refile command line utility performs three useful tasks on a directory of
 files; listing files which match a regular expression, renaming files which
@@ -90,5 +99,3 @@ Options
 -------
 
 -h, --help              print a useful help message
-
-"""
