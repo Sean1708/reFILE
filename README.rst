@@ -22,6 +22,8 @@ Alternatively you can clone the github repository and use setuptools, like so::
     $ git clone https://github.com/Sean1708/reFILE.git
     $ python3 setup.py install
 
+reFILE uses the Pathlib module so is only available for Python 3.
+
 
 -------------
 Documentation
@@ -57,6 +59,17 @@ can be specified as an absolute path or a relative one, if an absolute path is
 used then filenames will be printed as an absolute path and similarly for
 relative paths. Tilde expansion is performed at the command line but not within
 the program so wrapping your directory in single quotes is ill-advised.
+
+Options
+-------
+
+reFILE uses the idea of global and local options. Global options are available
+for all subcommands and must be place before the subcommand whereas local
+options are specific to a subcommand and must be placed after the subcommand.
+Most options are global, they are:
+
+-h, --help              print a useful help message
+-r, --recurse           search directories recursively
 
 
 Listing Files

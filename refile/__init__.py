@@ -11,13 +11,13 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile ls [-h] PATTERN [DIR]
-    $ refile mv [-h] PATTERN REPLACE [DIR]
-    $ refile rm [-h] PATTERN [DIR]
+    $ refile [-r] ls [-h] PATTERN [DIR]
+    $ refile [-r] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-r] rm [-h] PATTERN [DIR]
 
 
-General Advice
-==============
+General Usage
+=============
 
 To avoid issues with variable expansion and special characters on the command
 line it is advisable to enclose the regular expression in single quotes::
@@ -33,6 +33,17 @@ can be specified as an absolute path or a relative one, if an absolute path is
 used then filenames will be printed as an absolute path and similarly for
 relative paths. Tilde expansion is performed at the command line but not within
 the program so wrapping your directory in single quotes is ill-advised.
+
+Options
+-------
+
+reFILE uses the idea of global and local options. Global options are available
+for all subcommands and must be place before the subcommand whereas local
+options are specific to a subcommand and must be placed after the subcommand.
+Most options are global, they are:
+
+-h, --help              print a useful help message
+-r, --recurse           search directories recursively
 
 
 Listing Files

@@ -36,6 +36,7 @@ class Printer(Engine):
 
     def run(self):
         for d, f_list in self.files.items():
+            # if not current directory ('.')
             if f_list and d.name != '':
                 print(d, end='\n  ')
                 print('\n  '.join([f.name for f in f_list]))
