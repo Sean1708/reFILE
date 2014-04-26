@@ -7,7 +7,7 @@ setup(
     author='Sean Marshallsay',
     author_email='srm.1708@gmail.com',
     url='https://github.com/Sean1708/reFILE.git',
-    version='0.0',
+    version='0.1',
     install_requires=['nose'],
     packages=['refile'],
     entry_points={
