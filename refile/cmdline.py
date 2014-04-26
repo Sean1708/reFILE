@@ -1,6 +1,6 @@
 import sys
-import refile.engine
 import argparse
+from . import engine
 
 
 def setup_print(subparsers):
@@ -15,7 +15,7 @@ def setup_print(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    print_cmd.set_defaults(cls=refile.engine.Printer)
+    print_cmd.set_defaults(cls=engine.Printer)
 
 
 def setup_rename(subparsers):
@@ -31,7 +31,7 @@ def setup_rename(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    rename.set_defaults(cls=refile.engine.Renamer)
+    rename.set_defaults(cls=engine.Renamer)
 
 
 def setup_delete(subparsers):
@@ -46,7 +46,7 @@ def setup_delete(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    delete.set_defaults(cls=refile.engine.Deleter)
+    delete.set_defaults(cls=engine.Deleter)
 
 
 def main():
@@ -63,7 +63,7 @@ def main():
     # get dictionary of the command line arguments
     args = vars(parser.parse_args())
     # running `python refile/cmdline.py` works as expected but once installed
-    # with entry_points running `refile` does not bring up the usual argparse
+    # with entry_points, running `refile` does not bring up the usual argparse
     # error but instead keeps on running and raises KeyError since there is no
     # cls if no subcommand has been selected
     # this try statement gets around it but feels a bit hacky for my liking
