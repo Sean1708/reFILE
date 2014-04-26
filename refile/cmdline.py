@@ -54,7 +54,11 @@ def main():
         description="""Interact with files whose names match regular
         expressions. See `pydoc refile` for comprehensive documentation."""
     )
-    parser.add_argument('-r', '--recurse', action='store_true')
+    parser.add_argument(
+        '-r', '--recurse',
+        action='store_true',
+        help='search directories recursively'
+    )
 
     subparsers = parser.add_subparsers(title='subcommands')
     setup_print(subparsers)
