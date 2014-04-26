@@ -51,11 +51,12 @@ def setup_delete(subparsers):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='''Interact with files whose names match regular
-        expressions. See `pydoc refile` for comprehensive documentation.'''
+        description="""Interact with files whose names match regular
+        expressions. See `pydoc refile` for comprehensive documentation."""
     )
-    subparsers = parser.add_subparsers(title='subcommands')
+    parser.add_argument('-r', '--recurse', action='store_true')
 
+    subparsers = parser.add_subparsers(title='subcommands')
     setup_print(subparsers)
     setup_rename(subparsers)
     setup_delete(subparsers)

@@ -9,15 +9,24 @@ class Engine:
         self.regex = re.compile(PATTERN)
         self.replace = REPLACE
         self.directory = pathlib.Path(DIR)
-        self.files = self.match_files()
+        self.args = kwargs
 
-    def match_files(self):
-        files = []
-        for f in self.directory.iterdir():
+        # dict of the form {<directory>: [<files_in_directory>, ...]}
+        self.files = {}
+        self.match_files(self.directory)
+
+    def match_files(self, directory):
+        self.files[directory] = []
+        for f in directory.iterdir():
             if self.regex.search(f.name):
-                files.append(f)
+                self.files[directory].append(f)
+            if self.args['recurse'] is True and f.is_dir():
+                self.match_files(f)
 
-        return files
+        # if there are no matching files in the directory,
+        # don't bother keeping the directory entry
+        if not self.files[directory]:
+            del self.files[directory]
 
     def run(self):
         pass
@@ -26,21 +35,27 @@ class Engine:
 class Printer(Engine):
 
     def run(self):
-        for f in self.files:
-            print(f)
+        for d, f_list in self.files.items():
+            if f_list and d.name != '':
+                print(d, end='\n  ')
+                print('\n  '.join([f.name for f in f_list]))
+            elif f_list:
+                print('\n'.join([f.name for f in f_list]))
 
 
 class Renamer(Engine):
 
     def run(self):
-        for f in self.files:
-            new_name = self.regex.sub(self.replace, f.name)
-            # ensure file stays in same directory
-            new_file = f.with_name(new_name)
-            print('Rename: {0} -> {1}'.format(f, new_file))
+        for d, f_list in self.files.items():
+            for f in f_list:
+                new_name = self.regex.sub(self.replace, f.name)
+                # ensure file stays in same directory
+                new_file = f.with_name(new_name)
+                print('Rename: {0} -> {1}'.format(f, new_file))
 
-            rename = self.overwrite_guard(new_file)
-            if rename: f.rename(new_file)
+                rename = self.overwrite_guard(new_file)
+                if rename:
+                    f.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
@@ -64,6 +79,7 @@ class Renamer(Engine):
 class Deleter(Engine):
 
     def run(self):
-        for f in self.files:
-            if f.is_file():
-                f.unlink()
+        for d, f_list in self.files.items():
+            for f in f_list:
+                if f.is_file():
+                    f.unlink()
