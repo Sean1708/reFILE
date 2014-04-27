@@ -39,9 +39,9 @@ class Printer(Engine):
             # if not current directory ('.')
             if f_list and d.name != '':
                 print(d, end='\n  ')
-                print('\n  '.join([f.name for f in f_list]))
+                print('\n  '.join(f.name for f in f_list))
             elif f_list:
-                print('\n'.join([f.name for f in f_list]))
+                print('\n'.join(f.name for f in f_list))
 
 
 class Renamer(Engine):
