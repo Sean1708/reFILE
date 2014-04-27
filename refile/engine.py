@@ -1,4 +1,5 @@
 import re
+import os
 import sys
 import pathlib
 
@@ -9,7 +10,7 @@ class Engine:
         self.regex = re.compile(PATTERN)
         self.replace = REPLACE
         self.directory = pathlib.Path(DIR)
-        self.args = kwargs
+        self.options = self.parse_options(kwargs)
 
         # dict of the form {<directory>: [<files_in_directory>, ...]}
         self.files = {}
@@ -20,13 +21,18 @@ class Engine:
         for f in directory.iterdir():
             if self.regex.search(f.name):
                 self.files[directory].append(f)
-            if self.args['recurse'] is True and f.is_dir():
+            if self.options['recurse'] is True and f.is_dir():
                 self.match_files(f)
 
         # if there are no matching files in the directory,
         # don't bother keeping the directory entry
         if not self.files[directory]:
             del self.files[directory]
+
+    def parse_options(self, options):
+        if options.pop('quiet', False):
+            sys.stdout = open(os.devnull, 'w')
+        return options
 
     def run(self):
         pass

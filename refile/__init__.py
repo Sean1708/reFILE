@@ -84,6 +84,7 @@ Options
 -------
 
 -h, --help              print a useful help message
+-q, --quiet             supress all output except errors
 
 
 Deleting Files

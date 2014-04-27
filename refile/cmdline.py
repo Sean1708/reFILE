@@ -31,6 +31,11 @@ def setup_rename(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
+    rename.add_argument(
+        '-q', '--quiet',
+        action='store_true',
+        help='suppress all output except errors'
+    )
     rename.set_defaults(cls=engine.Renamer)
 
 
@@ -52,7 +57,7 @@ def setup_delete(subparsers):
 def main():
     parser = argparse.ArgumentParser(
         description="""Interact with files whose names match regular
-        expressions. See `pydoc refile` for comprehensive documentation."""
+        expressions. See `pydoc3 refile` for comprehensive documentation."""
     )
     parser.add_argument(
         '-r', '--recurse',

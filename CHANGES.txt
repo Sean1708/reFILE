@@ -5,3 +5,4 @@ v0.0  --  2014-04-25
 v0.1  --  
 
     * Added the -r option to search directories recursively.
+    * Added the -q option to the mv subcommand to supress output.
