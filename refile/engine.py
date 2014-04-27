@@ -21,7 +21,7 @@ class Engine:
         for f in directory.iterdir():
             if self.regex.search(f.name):
                 self.files[directory].append(f)
-            if self.options['recurse'] is True and f.is_dir():
+            if self.options.get('recurse') is True and f.is_dir():
                 self.match_files(f)
 
         # if there are no matching files in the directory,
@@ -30,6 +30,10 @@ class Engine:
             del self.files[directory]
 
     def parse_options(self, options):
+        # remove any flags which require a specific action and perform the
+        # action
+        # if it just holds true or false (i.e. 'recurse') then leave it and
+        # access it straight from the dictionary using dict.get()
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
         return options
