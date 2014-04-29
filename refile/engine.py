@@ -58,14 +58,18 @@ class Renamer(Engine):
 
     def run(self):
         for f in (f_list for d, f_list in self.files.items()):
-            new_name = self.regex.sub(self.replace, f.name)
-            # ensure file stays in same directory
-            new_file = f.with_name(new_name)
-            print('Rename: {0} -> {1}'.format(f, new_file))
+            # maybe implement this in the matching method instead
+            # might not need second set of parens
+            if (f.is_file() or
+                    (f.is_dir() and self.options.get('directories') is True)):
+                new_name = self.regex.sub(self.replace, f.name)
+                # ensure file stays in same directory
+                new_file = f.with_name(new_name)
+                print('Rename: {0} -> {1}'.format(f, new_file))
 
-            rename = self.overwrite_guard(new_file)
-            if rename:
-                f.rename(new_file)
+                rename = self.overwrite_guard(new_file)
+                if rename:
+                    f.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
