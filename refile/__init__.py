@@ -45,6 +45,7 @@ Most options are global, they are:
 -h, --help              print a useful help message
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
+-v, --verbose           print extra information
 
 
 Listing Files

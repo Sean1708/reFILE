@@ -93,4 +93,6 @@ class Deleter(Engine):
         for d, f_list in self.files.items():
             for f in f_list:
                 if f.is_file():
+                    if self.options.get('verbose') is True:
+                        print('Deleting {0}'.format(f))
                     f.unlink()

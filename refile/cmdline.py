@@ -64,6 +64,11 @@ def main():
         action='store_true',
         help='suppress all output except errors'
     )
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='print extra information'
+    )
 
     subparsers = parser.add_subparsers(title='subcommands')
     setup_print(subparsers)
