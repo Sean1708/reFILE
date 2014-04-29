@@ -57,16 +57,15 @@ class Printer(Engine):
 class Renamer(Engine):
 
     def run(self):
-        for d, f_list in self.files.items():
-            for f in f_list:
-                new_name = self.regex.sub(self.replace, f.name)
-                # ensure file stays in same directory
-                new_file = f.with_name(new_name)
-                print('Rename: {0} -> {1}'.format(f, new_file))
+        for f in (f_list for d, f_list in self.files.items()):
+            new_name = self.regex.sub(self.replace, f.name)
+            # ensure file stays in same directory
+            new_file = f.with_name(new_name)
+            print('Rename: {0} -> {1}'.format(f, new_file))
 
-                rename = self.overwrite_guard(new_file)
-                if rename:
-                    f.rename(new_file)
+            rename = self.overwrite_guard(new_file)
+            if rename:
+                f.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
@@ -90,9 +89,8 @@ class Renamer(Engine):
 class Deleter(Engine):
 
     def run(self):
-        for d, f_list in self.files.items():
-            for f in f_list:
-                if f.is_file():
-                    if self.options.get('verbose') is True:
-                        print('Deleting {0}'.format(f))
-                    f.unlink()
+        for f in (f_list for d, f_list in self.files.items()):
+            if f.is_file():
+                if self.options.get('verbose') is True:
+                    print('Deleting {0}'.format(f))
+                f.unlink()
