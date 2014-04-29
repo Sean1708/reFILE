@@ -31,11 +31,6 @@ def setup_rename(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    rename.add_argument(
-        '-q', '--quiet',
-        action='store_true',
-        help='suppress all output except errors'
-    )
     rename.set_defaults(cls=engine.Renamer)
 
 
@@ -63,6 +58,11 @@ def main():
         '-r', '--recurse',
         action='store_true',
         help='search directories recursively'
+    )
+    parser.add_argument(
+        '-q', '--quiet',
+        action='store_true',
+        help='suppress all output except errors'
     )
 
     subparsers = parser.add_subparsers(title='subcommands')

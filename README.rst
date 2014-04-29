@@ -70,6 +70,7 @@ Most options are global, they are:
 
 -h, --help              print a useful help message
 -r, --recurse           search directories recursively
+-q, --quiet             supress all output except errors
 
 
 Listing Files
@@ -110,7 +111,6 @@ Options
 -------
 
 -h, --help              print a useful help message
--q, --quiet             supress all output except errors
 
 
 Deleting Files
