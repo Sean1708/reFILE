@@ -46,6 +46,7 @@ Most options are global, they are:
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
+-d, --directories       rename and delete (if empty) directories
 
 
 Listing Files

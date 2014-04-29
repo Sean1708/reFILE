@@ -71,6 +71,7 @@ Most options are global, they are:
 -h, --help              print a useful help message
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
+-d, --directories       rename and delete (if empty) directories
 
 
 Listing Files

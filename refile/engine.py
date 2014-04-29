@@ -60,8 +60,8 @@ class Renamer(Engine):
         for f in (f_list for d, f_list in self.files.items()):
             # maybe implement this in the matching method instead
             # might not need second set of parens
-            if (f.is_file() or
-                    (f.is_dir() and self.options.get('directories') is True)):
+            if f.is_file() or (f.is_dir() and
+                    self.options.get('directories') is True):
                 new_name = self.regex.sub(self.replace, f.name)
                 # ensure file stays in same directory
                 new_file = f.with_name(new_name)
