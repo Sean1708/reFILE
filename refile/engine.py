@@ -90,7 +90,15 @@ class Deleter(Engine):
 
     def run(self):
         for f in (f_list for d, f_list in self.files.items()):
+            if self.options.get('verbose') is True:
+                print('Deleting {0}'.format(f))
             if f.is_file():
-                if self.options.get('verbose') is True:
-                    print('Deleting {0}'.format(f))
                 f.unlink()
+            elif f.is_dir() and self.options.get('directories') is True:
+                # if next() returns a file, directory is not empty and
+                # if-statement will evaluate to False
+                if not next(f.iterdir(), False):
+                    f.rmdir()
+            else:
+                print('  Warning: {0} is not a file or directory.'.format(f))
+                print('  Info: {0} was not deleted.'.format(f))

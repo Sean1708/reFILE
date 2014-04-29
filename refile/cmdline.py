@@ -69,6 +69,11 @@ def main():
         action='store_true',
         help='print extra information'
     )
+    parser.add_argument(
+        '-d', '--directories',
+        action='store_true',
+        help='delete and rename directories'
+    )
 
     subparsers = parser.add_subparsers(title='subcommands')
     setup_print(subparsers)
