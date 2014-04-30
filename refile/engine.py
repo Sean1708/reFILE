@@ -57,19 +57,19 @@ class Printer(Engine):
 class Renamer(Engine):
 
     def run(self):
-        for f in (f_list for d, f_list in self.files.items()):
-            # maybe implement this in the matching method instead
-            # might not need second set of parens
-            if f.is_file() or (f.is_dir() and
-                    self.options.get('directories') is True):
-                new_name = self.regex.sub(self.replace, f.name)
-                # ensure file stays in same directory
-                new_file = f.with_name(new_name)
-                print('Rename: {0} -> {1}'.format(f, new_file))
+        for f_list in self.files.values():
+            for f in f_list:
+                # maybe implement this in the matching method instead
+                if (f.is_file() or f.is_dir() and
+                        self.options.get('directories') is True):
+                    new_name = self.regex.sub(self.replace, f.name)
+                    # ensure file stays in same directory
+                    new_file = f.with_name(new_name)
+                    print('Rename: {0} -> {1}'.format(f, new_file))
 
-                rename = self.overwrite_guard(new_file)
-                if rename:
-                    f.rename(new_file)
+                    rename = self.overwrite_guard(new_file)
+                    if rename:
+                        f.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
@@ -93,16 +93,19 @@ class Renamer(Engine):
 class Deleter(Engine):
 
     def run(self):
-        for f in (f_list for d, f_list in self.files.items()):
-            if self.options.get('verbose') is True:
-                print('Deleting {0}'.format(f))
-            if f.is_file():
-                f.unlink()
-            elif f.is_dir() and self.options.get('directories') is True:
-                # if next() returns a file, directory is not empty and
-                # if-statement will evaluate to False
-                if not next(f.iterdir(), False):
-                    f.rmdir()
-            else:
-                print('  Warning: {0} is not a file or directory.'.format(f))
-                print('  Info: {0} was not deleted.'.format(f))
+        for f_list in self.files.values():
+            for f in f_list:
+                if self.options.get('verbose') is True:
+                    print('Deleting {0}'.format(f))
+                if f.is_file():
+                    f.unlink()
+                elif f.is_dir() and self.options.get('directories') is True:
+                    # if next() returns a file, directory is not empty and
+                    # if-statement will evaluate to False
+                    if not next(f.iterdir(), False):
+                        f.rmdir()
+                else:
+                    print(
+                        '  Warning: {0} is not a file or directory.'.format(f)
+                    )
+                    print('  Info: {0} was not deleted.'.format(f))
