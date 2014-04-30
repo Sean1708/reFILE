@@ -30,8 +30,13 @@ def teardown():
 def test_init():
     pattern = r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]'
     replace = r'hellothere\1'
-    engine = Engine(pattern, directory, replace,
-                    **{'recurse': True, 'quiet': True})
+    engine = Engine(
+        pattern, directory, replace,
+        **{
+            'recurse': True,
+            'quiet': True,
+        }
+    )
 
     assert_equal(engine.regex, re.compile(pattern))
     assert_equal(engine.replace, replace)
