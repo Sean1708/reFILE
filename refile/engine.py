@@ -17,6 +17,8 @@ class Engine:
         self.match_files(self.directory)
 
     def match_files(self, directory):
+        if not directory.is_dir():
+            sys.exit('Error: {0} is not a directory.'.format(directory))
         self.files[directory] = []
         for f in directory.iterdir():
             if self.regex.search(f.name):

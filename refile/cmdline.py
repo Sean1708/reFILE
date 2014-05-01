@@ -93,7 +93,3 @@ def main():
         cmd(**args).run()
     except KeyError:
         parser.print_help()
-
-
-if __name__ == '__main__':
-    sys.exit(main())
