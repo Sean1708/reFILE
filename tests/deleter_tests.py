@@ -42,44 +42,29 @@ def teardown():
     test_dir.rmdir()
 
 
-def test_rename():
-    renamer = Renamer(
+def test_delete():
+    deleter = Deleter(
         r'^([0-9]{4}-?[01][0-9]-?[0-3][0-9]-?)piccy',
         directory,
-        r'\1picture',
-        **{'quiet': True}
     )
-    renamer.run()
+    deleter.run()
     p = pathlib.Path(directory)
-    renamed_files = set(f.name for f in p.iterdir())
+    remaining_files = set(f.name for f in p.iterdir())
     new_files = [
-        '20140703picture',
-        '19941123picture',
-        '1900-01-01-picture',
-        '2006-08-12picture',
         'piccy2047-02-13'
     ]
-    assert_set_equal(set(new_files + dirs), renamed_files)
+    assert_set_equal(set(new_files + dirs), remaining_files)
 
-    renamer = Renamer(
+    deleter = Deleter(
         r'piccy',
         directory,
-        r'picture',
-        **{'quiet': True, 'directories': True}
+        **{'directories': True}
     )
-    renamer.run()
+    deleter.run()
     p = pathlib.Path(directory)
-    renamed_files = set(f.name for f in p.iterdir())
-    new_files = [
-        '20140703picture',
-        '19941123picture',
-        '1900-01-01-picture',
-        '2006-08-12picture',
-        'picture2047-02-13',
-        'epic_pictures',
-        'ok_piccies'
-    ]
-    assert_set_equal(set(new_files), renamed_files)
+    remaining_files = set(f.name for f in p.iterdir())
+    # directories are not empty so should not be deleted
+    assert_set_equal(set(dirs), remaining_files)
 
 
 def test_recursive():

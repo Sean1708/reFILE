@@ -9,3 +9,4 @@ v0.1  --
     * Added the -v option to print extra info.
     * Rename no longer works on directories by default.
     * Added the -d option to rename and delete directories.
+    * More useful error messages and warnings.

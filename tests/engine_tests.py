@@ -66,3 +66,7 @@ def test_match_files():
         for f in f_list:
             matched_files.append(f.name)
     assert_set_equal(set(files[2:]), set(matched_files))
+
+
+def test_recursive():
+    pass
