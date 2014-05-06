@@ -1,2 +1,5 @@
+include CHANGES.txt
 include README.rst
 include LICENSE
+
+recursive-include tests *_tests.py
