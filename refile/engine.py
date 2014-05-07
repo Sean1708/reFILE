@@ -14,8 +14,6 @@ class Matcher:
         self.options = self.parse_options(kwargs)
 
         # dict of the form {<directory>: [<files_in_directory>, ...]}
-        # OrderedDict takes roughly same amount of time as normal dict so is
-        # unlikely to be a bottleneck
         self.files = OrderedDict()
         self.current_depth = 0
         self.match_files(self.directory)
@@ -24,17 +22,19 @@ class Matcher:
         if not directory.is_dir():
             sys.exit('Error: {0} is not a directory.'.format(directory))
 
+        # new directory has been entered so increase
         self.current_depth += 1
 
         self.files[directory] = []
         for f in directory.iterdir():
-            if self.regex.search(f.name):
+            if self.regex.search(f.name) and not self.ignore.search(f.name):
                 self.files[directory].append(f)
             # I don't like the length of this line
             if (self.options.get('recurse') is True and f.is_dir()
                     and self.current_depth <= self.max_depth):
                 self.match_files(f)
 
+        # directory is about to be left so decrease
         self.current_depth -= 1
 
         # if there are no matching files in the directory,
@@ -48,11 +48,18 @@ class Matcher:
         # if it just holds true or false (i.e. 'recurse') then leave it and
         # access it straight from the dictionary using dict.get()
 
+        ## --limit
         # ensure max depth is not negative
         # float('inf') is only there to make nosetests happy
         self.max_depth = abs(options.pop('limit', float('inf')))
+        ## --ignore
+        ignore_pattern = options.pop('ignore', False)
+        if ignore_pattern is not False:
+            self.ignore = re.compile(ignore_pattern)
+        ## --quiet
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
+
         return options
 
     def run(self):

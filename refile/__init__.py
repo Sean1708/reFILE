@@ -11,9 +11,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-rqvdl] ls [-h] PATTERN [DIR]
-    $ refile [-rqvdl] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-rqvdl] rm [-h] PATTERN [DIR]
+    $ refile [-rqvdli] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdli] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdli] rm [-h] PATTERN [DIR]
 
 
 General Usage
@@ -48,6 +48,7 @@ Most options are global, they are:
 -v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
 -l, --limit             maximum depth limit when searching recursively
+-i, --ignore            ignore any files which match this regex
 
 
 Listing Files

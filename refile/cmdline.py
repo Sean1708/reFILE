@@ -24,13 +24,18 @@ def setup_parser(parser):
         action='store_true',
         help='delete and rename directories'
     )
-    # use infinity as default so that limit can't be reached is not specified
+    # use infinity as default so that limit can't be reached if not specified
     parser.add_argument(
         '-l', '--limit',
         action='store',
         type=int,
         default=float('inf'),
         help='maximum depth limit when searching recursively'
+    )
+    parser.add_argument(
+        '-i', '--ignore',
+        action='store',
+        help='ignore files matching this regex'
     )
 
 
