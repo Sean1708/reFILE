@@ -2,6 +2,7 @@ import re
 import os
 import sys
 import pathlib
+from collections import OrderedDict
 
 
 class Engine:
@@ -13,7 +14,9 @@ class Engine:
         self.options = self.parse_options(kwargs)
 
         # dict of the form {<directory>: [<files_in_directory>, ...]}
-        self.files = {}
+        # OrderedDict takes roughly same amount of time as normal dict so is
+        # unlikely to be a bottleneck
+        self.files = OrderedDict()
         self.match_files(self.directory)
 
     def match_files(self, directory):
