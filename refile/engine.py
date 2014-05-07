@@ -5,7 +5,7 @@ import pathlib
 from collections import OrderedDict
 
 
-class Engine:
+class Matcher:
 
     def __init__(self, PATTERN, DIR, REPLACE=None, **kwargs):
         self.regex = re.compile(PATTERN)
@@ -49,7 +49,8 @@ class Engine:
         # access it straight from the dictionary using dict.get()
 
         # ensure max depth is not negative
-        self.max_depth = abs(options.pop('limit'))
+        # float('inf') is only there to make nosetests happy
+        self.max_depth = abs(options.pop('limit', float('inf')))
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
         return options
@@ -58,7 +59,7 @@ class Engine:
         pass
 
 
-class Printer(Engine):
+class Printer(Matcher):
 
     def run(self):
         for d, f_list in self.files.items():
@@ -70,12 +71,11 @@ class Printer(Engine):
                 print('\n'.join(f.name for f in f_list))
 
 
-class Renamer(Engine):
+class Renamer(Matcher):
 
     def run(self):
         for f_list in self.files.values():
             for f in f_list:
-                # maybe implement this in the matching method instead
                 if (f.is_file() or f.is_dir() and
                         self.options.get('directories') is True):
                     new_name = self.regex.sub(self.replace, f.name)
@@ -106,7 +106,7 @@ class Renamer(Engine):
             return True
 
 
-class Deleter(Engine):
+class Deleter(Matcher):
 
     def run(self):
         for f_list in self.files.values():

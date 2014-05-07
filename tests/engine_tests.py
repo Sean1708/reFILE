@@ -30,12 +30,9 @@ def teardown():
 def test_init():
     pattern = r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]'
     replace = r'hellothere\1'
-    engine = Engine(
+    engine = Matcher(
         pattern, directory, replace,
-        **{
-            'recurse': True,
-            'quiet': True,
-        }
+        **{'recurse': True,'quiet': True}
     )
 
     assert_equal(engine.regex, re.compile(pattern))
@@ -46,21 +43,21 @@ def test_init():
 
 
 def test_match_files():
-    matcher = Engine(r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
+    matcher = Matcher(r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
             matched_files.append(f.name)
     assert_set_equal(set(files), set(matched_files))
 
-    matcher = Engine(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
+    matcher = Matcher(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
             matched_files.append(f.name)
     assert_set_equal(set(files[:4]), set(matched_files))
 
-    matcher = Engine(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory)
+    matcher = Matcher(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
