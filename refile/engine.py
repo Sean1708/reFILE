@@ -17,17 +17,25 @@ class Engine:
         # OrderedDict takes roughly same amount of time as normal dict so is
         # unlikely to be a bottleneck
         self.files = OrderedDict()
+        self.current_depth = 0
         self.match_files(self.directory)
 
     def match_files(self, directory):
         if not directory.is_dir():
             sys.exit('Error: {0} is not a directory.'.format(directory))
+
+        self.current_depth += 1
+
         self.files[directory] = []
         for f in directory.iterdir():
             if self.regex.search(f.name):
                 self.files[directory].append(f)
-            if self.options.get('recurse') is True and f.is_dir():
+            # I don't like the length of this line
+            if (self.options.get('recurse') is True and f.is_dir()
+                    and self.current_depth <= self.max_depth):
                 self.match_files(f)
+
+        self.current_depth -= 1
 
         # if there are no matching files in the directory,
         # don't bother keeping the directory entry
@@ -39,6 +47,10 @@ class Engine:
         # action
         # if it just holds true or false (i.e. 'recurse') then leave it and
         # access it straight from the dictionary using dict.get()
+
+        # ensure not negative number and if no limit is specified set it to
+        # infinity
+        self.max_depth = abs(options.pop('limit'))
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
         return options

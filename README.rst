@@ -37,9 +37,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile ls [-h] PATTERN [DIR]
-    $ refile mv [-h] PATTERN REPLACE [DIR]
-    $ refile rm [-h] PATTERN [DIR]
+    $ refile [-rqvdl] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdl] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdl] rm [-h] PATTERN [DIR]
 
 
 General Advice
@@ -72,6 +72,7 @@ Most options are global, they are:
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
 -d, --directories       rename and delete (if empty) directories
+-l, --limit             maximu depth limit when searching recursively
 
 
 Listing Files

@@ -11,9 +11,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-r] ls [-h] PATTERN [DIR]
-    $ refile [-r] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-r] rm [-h] PATTERN [DIR]
+    $ refile [-rqvdl] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdl] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdl] rm [-h] PATTERN [DIR]
 
 
 General Usage
@@ -47,6 +47,7 @@ Most options are global, they are:
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
+-l, --limit             maximum depth limit when searching recursively
 
 
 Listing Files
