@@ -10,3 +10,7 @@ v0.1  --  2014-05-06
     * Rename no longer works on directories by default.
     * Added the -d option to rename and delete directories.
     * More useful error messages and warnings.
+
+v0.2  --  
+
+    * Added the -l option to set a depth limit on recursive searches.

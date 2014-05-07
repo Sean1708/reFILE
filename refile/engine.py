@@ -48,8 +48,7 @@ class Engine:
         # if it just holds true or false (i.e. 'recurse') then leave it and
         # access it straight from the dictionary using dict.get()
 
-        # ensure not negative number and if no limit is specified set it to
-        # infinity
+        # ensure max depth is not negative
         self.max_depth = abs(options.pop('limit'))
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
