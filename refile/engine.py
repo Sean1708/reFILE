@@ -2,6 +2,7 @@ import re
 import os
 import sys
 import pathlib
+from . import printing as prt
 from collections import OrderedDict
 
 
@@ -13,28 +14,27 @@ class Matcher:
         self.directory = pathlib.Path(DIR)
         self.options = self.parse_options(kwargs)
 
-        # dict of the form {<directory>: [<files_in_directory>, ...]}
         self.files = OrderedDict()
         self.current_depth = 0
         self.match_files(self.directory)
 
     def match_files(self, directory):
         if not directory.is_dir():
-            sys.exit('Error: {0} is not a directory.'.format(directory))
+            prt.print_err('{0} is not a directory.'.format(directory))
+            sys.exit()
 
-        # new directory has been entered so increase
+        # each time this func is called a new directory has been entered
         self.current_depth += 1
 
         self.files[directory] = []
         for f in directory.iterdir():
             if self.regex.search(f.name) and not self.ignore.search(f.name):
                 self.files[directory].append(f)
-            # I don't like the length of this line
             if (self.options.get('recurse') is True and f.is_dir()
                     and self.current_depth <= self.max_depth):
                 self.match_files(f)
 
-        # directory is about to be left so decrease
+        # once the for-loop has been finished a directory has been left
         self.current_depth -= 1
 
         # if there are no matching files in the directory,
@@ -50,33 +50,27 @@ class Matcher:
 
         ## --limit
         # ensure max depth is not negative
-        # float('inf') is only there to make nosetests happy
         self.max_depth = abs(options.pop('limit', float('inf')))
         ## --ignore
-        ignore_pattern = options.pop('ignore', False)
-        if ignore_pattern is not False:
+        # argparse stores None by default
+        ignore_pattern = options.pop('ignore', None)
+        if ignore_pattern is not None:
             self.ignore = re.compile(ignore_pattern)
+        else:
+            # if no ignore pattern is given, set ignore to an unmatchable regex
+            self.ignore = re.compile(r'(?!.*)')
         ## --quiet
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
 
         return options
 
-    def run(self):
-        pass
-
 
 class Printer(Matcher):
 
     def run(self):
         for d, f_list in self.files.items():
-            # if not current directory ('.')
-            if f_list and d.name != '':
-                print(d, end='\n  ')
-                print('\n  '.join(f.name for f in f_list))
-            elif f_list:
-                print('\n'.join(f.name for f in f_list))
-
+            prt.print_files(d, f_list)
 
 class Renamer(Matcher):
 
@@ -96,17 +90,14 @@ class Renamer(Matcher):
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
-            print(
-                '  Warning: File {0} already exists!'.format(new_file),
-                end=' '
-            )
+            prt.print_warn('File {0} already exists!'.format(new_file), end=' ')
             overwrite = input('Overwrite (y/n)? ')[0].lower()
 
             if overwrite == 'y':
                 return True
             else:
                 if overwrite != 'n':
-                    print('  Invalid option. File will not be overwritten.')
+                    prt.print_info('Invalid option. File was not overwritten.')
                 return False
         else:
             # if it doesn't exist continue with the rename
@@ -128,7 +119,5 @@ class Deleter(Matcher):
                     if not next(f.iterdir(), False):
                         f.rmdir()
                 else:
-                    print(
-                        '  Warning: {0} is not a file or directory.'.format(f)
-                    )
-                    print('  Info: {0} was not deleted.'.format(f))
+                    prt.print_warn('{0} is not a file or directory.'.format(f))
+                    prt.print_info('{0} was not deleted.'.format(f))
