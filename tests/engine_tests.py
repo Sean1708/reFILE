@@ -14,6 +14,16 @@ files = [
 
 
 def setup():
+    global args
+    args = {
+        'recurse': False,
+        'quiet': True,
+        'verbose': False,
+        'directories': False,
+        'limit': float('inf'),
+        'ignore': r'(?!.*)'
+    }
+
     test_dir.mkdir()
 
     for f in files:
@@ -32,32 +42,32 @@ def test_init():
     replace = r'hellothere\1'
     engine = Matcher(
         pattern, directory, replace,
-        **{'recurse': True,'quiet': True}
+        **args
     )
 
     assert_equal(engine.regex, re.compile(pattern))
     assert_equal(engine.replace, replace)
     assert_equal(engine.directory, test_dir)
-    assert_dict_contains_subset({'recurse': True}, engine.options)
+    assert_dict_contains_subset({'recurse': False}, engine.options)
     assert_not_in('quiet', engine.options)
 
 
 def test_match_files():
-    matcher = Matcher(r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
+    matcher = Matcher(r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory, **args)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
             matched_files.append(f.name)
     assert_set_equal(set(files), set(matched_files))
 
-    matcher = Matcher(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory)
+    matcher = Matcher(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory, **args)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
             matched_files.append(f.name)
     assert_set_equal(set(files[:4]), set(matched_files))
 
-    matcher = Matcher(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory)
+    matcher = Matcher(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory, **args)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:

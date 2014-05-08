@@ -30,7 +30,7 @@ class Matcher:
         for f in directory.iterdir():
             if self.regex.search(f.name) and not self.ignore.search(f.name):
                 self.files[directory].append(f)
-            if (self.options.get('recurse') is True and f.is_dir()
+            if (self.options['recurse'] is True and f.is_dir()
                     and self.current_depth <= self.max_depth):
                 self.match_files(f)
 
@@ -46,19 +46,13 @@ class Matcher:
         # remove any flags which require a specific action and perform the
         # action
         # if it just holds true or false (i.e. 'recurse') then leave it and
-        # access it straight from the dictionary using dict.get()
+        # access it straight from the dictionary using dict[]
 
         ## --limit
         # ensure max depth is not negative
-        self.max_depth = abs(options.pop('limit', float('inf')))
+        self.max_depth = abs(options.pop('limit'))
         ## --ignore
-        # argparse stores None by default
-        ignore_pattern = options.pop('ignore', None)
-        if ignore_pattern is not None:
-            self.ignore = re.compile(ignore_pattern)
-        else:
-            # if no ignore pattern is given, set ignore to an unmatchable regex
-            self.ignore = re.compile(r'(?!.*)')
+        self.ignore = re.compile(options.pop('ignore'))
         ## --quiet
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
@@ -72,13 +66,14 @@ class Printer(Matcher):
         for d, f_list in self.files.items():
             prt.print_files(d, f_list)
 
+
 class Renamer(Matcher):
 
     def run(self):
         for f_list in self.files.values():
             for f in f_list:
                 if (f.is_file() or f.is_dir() and
-                        self.options.get('directories') is True):
+                        self.options['directories'] is True):
                     new_name = self.regex.sub(self.replace, f.name)
                     # ensure file stays in same directory
                     new_file = f.with_name(new_name)
@@ -109,11 +104,11 @@ class Deleter(Matcher):
     def run(self):
         for f_list in self.files.values():
             for f in f_list:
-                if self.options.get('verbose') is True:
+                if self.options['verbose'] is True:
                     print('Deleting {0}'.format(f))
                 if f.is_file():
                     f.unlink()
-                elif f.is_dir() and self.options.get('directories') is True:
+                elif f.is_dir() and self.options['directories'] is True:
                     # if next() returns a file, directory is not empty and
                     # if-statement will evaluate to False
                     if not next(f.iterdir(), False):

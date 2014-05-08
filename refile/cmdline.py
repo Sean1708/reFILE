@@ -32,9 +32,11 @@ def setup_parser(parser):
         default=float('inf'),
         help='maximum depth limit when searching recursively'
     )
+    # if not specified use a regex which will not match anything
     parser.add_argument(
         '-i', '--ignore',
         action='store',
+        default=r'(?!.*)',
         help='ignore files matching this regex'
     )
 

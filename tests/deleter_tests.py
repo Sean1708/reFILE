@@ -18,6 +18,16 @@ dirs = [
 
 
 def setup():
+    global args
+    args = {
+        'recurse': False,
+        'quiet': True,
+        'verbose': False,
+        'directories': False,
+        'limit': float('inf'),
+        'ignore': r'(?!.*)'
+    }
+
     test_dir.mkdir()
 
     for d in dirs:
@@ -46,6 +56,7 @@ def test_delete():
     deleter = Deleter(
         r'^([0-9]{4}-?[01][0-9]-?[0-3][0-9]-?)piccy',
         directory,
+        **args
     )
     deleter.run()
     p = pathlib.Path(directory)
@@ -55,10 +66,11 @@ def test_delete():
     ]
     assert_set_equal(set(new_files + dirs), remaining_files)
 
+    args['directories'] = True
     deleter = Deleter(
         r'piccy',
         directory,
-        **{'directories': True}
+        **args
     )
     deleter.run()
     p = pathlib.Path(directory)

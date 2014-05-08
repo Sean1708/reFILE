@@ -18,6 +18,16 @@ dirs = [
 
 
 def setup():
+    global args
+    args = {
+        'recurse': False,
+        'quiet': True,
+        'verbose': False,
+        'directories': False,
+        'limit': float('inf'),
+        'ignore': r'(?!.*)'
+    }
+
     test_dir.mkdir()
 
     for d in dirs:
@@ -47,7 +57,7 @@ def test_rename():
         r'^([0-9]{4}-?[01][0-9]-?[0-3][0-9]-?)piccy',
         directory,
         r'\1picture',
-        **{'quiet': True}
+        **args
     )
     renamer.run()
     p = pathlib.Path(directory)
@@ -61,11 +71,12 @@ def test_rename():
     ]
     assert_set_equal(set(new_files + dirs), renamed_files)
 
+    args['directories'] = True
     renamer = Renamer(
         r'piccy',
         directory,
         r'picture',
-        **{'quiet': True, 'directories': True}
+        **args
     )
     renamer.run()
     p = pathlib.Path(directory)
