@@ -50,13 +50,15 @@ Most options are global, they are:
 -l, --limit             maximum depth limit when searching recursively
 -i, --ignore            ignore any files which match this regex
 
+The only local options are for help on a specific command.
+
 
 Listing Files
 =============
 
 Usage::
 
-    $ refile ls [-h] PATTERN [DIR]
+    $ refile [-rqvdli] ls PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -73,7 +75,7 @@ Renaming Files
 
 Usage::
 
-    $ refile mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdli] mv PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -96,7 +98,7 @@ Deleting Files
 
 Usage::
 
-    $ refile rm [-h] PATTERN [DIR]
+    $ refile [-rqvdli] rm PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the
@@ -109,3 +111,13 @@ Options
 -h, --help              print a useful help message
 
 """
+
+from __future__ import absolute_import, print_function
+
+__title__ = 'reFILE'
+__version__ = '0.2'
+__author__ = 'Sean Marshallsay'
+__email__ = 'srm.1708@gmail.com'
+__description__ = 'Utility for manipulating files via regex.'
+__homepage__ = 'https://github.com/Sean1708/reFILE'
+__download__ = 'https://github.com/Sean1708/reFILE.git'

@@ -15,3 +15,4 @@ v0.2  --
 
     * Added the -l option to set a depth limit on recursive searches.
     * Added the -i option to specify files to ignore.
+    * Tentative support for Python 2

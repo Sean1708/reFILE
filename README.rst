@@ -15,14 +15,16 @@ Installation
 reFILE should be available on the PyPI repository so installing should be as
 simple as::
     
-    $ pip3 install reFILE
+    $ pip install reFILE
 
 Alternatively you can clone the github repository and use setuptools, like so::
     
     $ git clone https://github.com/Sean1708/reFILE.git
-    $ python3 setup.py install
+    $ python setup.py install
 
-reFILE uses the Pathlib module so is only available for Python 3.
+reFILE uses the pathlib module which only has tentative support for Python 2.
+For this reason, it is reccomended that you use Python 3 to download reFILE.
+Having said this, however, reFILE should still work on Python 2 installations.
 
 
 -------------
@@ -42,8 +44,8 @@ Usage::
     $ refile [-rqvdli] rm [-h] PATTERN [DIR]
 
 
-General Advice
-==============
+General Usage
+=============
 
 To avoid issues with variable expansion and special characters on the command
 line it is advisable to enclose the regular expression in single quotes::
@@ -71,9 +73,12 @@ Most options are global, they are:
 -h, --help              print a useful help message
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
+-v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
 -l, --limit             maximum depth limit when searching recursively
 -i, --ignore            ignore any files which match this regex
+
+The only local options are for help on a specific command.
 
 
 Listing Files
@@ -81,7 +86,7 @@ Listing Files
 
 Usage::
 
-    $ refile ls [-h] PATTERN [DIR]
+    $ refile [-rqvdli] ls PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -98,7 +103,7 @@ Renaming Files
 
 Usage::
 
-    $ refile mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdli] mv PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -121,7 +126,7 @@ Deleting Files
 
 Usage::
 
-    $ refile rm [-h] PATTERN [DIR]
+    $ refile [-rqvdli] rm PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the

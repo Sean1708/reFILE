@@ -1,3 +1,7 @@
+# the future statement in __init__.py isn't picked up for some reason
+from __future__ import print_function
+
+
 def print_err(msg='unknown error', **kwargs):
     ERROR = '\033[31mError:\033[0m'
     print(ERROR, msg, **kwargs)

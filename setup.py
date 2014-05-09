@@ -1,14 +1,24 @@
+import sys
+import refile
 from setuptools import setup
 
+
+install_requires = ['nose']
+# pathlib is new to std lib in 3.4
+if sys.version_info[:2] < (3, 4):
+    install_requires.append('pathlib')
+
+
 setup(
-    name='reFILE',
-    description='Utility for manipulating files via regex.',
+    name=refile.__title__,
+    version=refile.__version__,
+    author=refile.__author__,
+    author_email=refile.__email__,
+    description=refile.__description__,
     long_description=open('README.rst').read(),
-    author='Sean Marshallsay',
-    author_email='srm.1708@gmail.com',
-    url='https://github.com/Sean1708/reFILE.git',
-    version='0.1',
-    install_requires=['nose'],
+    url=refile.__homepage__,
+    download_url=refile.__download__,
+    install_requires=install_requires,
     packages=['refile'],
     entry_points={
         'console_scripts': ['refile = refile.cmdline:main']
@@ -19,6 +29,7 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: Unix',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2'
         'Programming Language :: Python :: 3'
     ]
 )
