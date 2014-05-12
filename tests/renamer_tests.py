@@ -25,6 +25,7 @@ def setup():
         'verbose': False,
         'directories': False,
         'limit': float('inf'),
+        'confirm': False,
         'ignore': r'(?!.*)'
     }
 

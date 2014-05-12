@@ -48,7 +48,9 @@ Most options are global, they are:
 -v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
 -l, --limit             maximum depth limit when searching recursively
--i, --ignore            ignore any files which match this regex
+-I, --ignore            ignore any files which match this regex
+-i, --confirm           prompt for confirmation before renaming or
+                            deleting any files
 
 The only local options are for help on a specific command.
 

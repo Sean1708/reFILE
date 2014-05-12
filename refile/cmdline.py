@@ -34,10 +34,15 @@ def setup_parser(parser):
     )
     # if not specified use a regex which will not match anything
     parser.add_argument(
-        '-i', '--ignore',
+        '-I', '--ignore',
         action='store',
         default=r'(?!.*)',
         help='ignore files matching this regex'
+    )
+    parser.add_argument(
+        '-i', '--confirm',
+        action='store_true',
+        help='prompt for confirmation before renaming or deleting any files'
     )
 
 

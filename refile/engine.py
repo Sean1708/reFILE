@@ -85,18 +85,23 @@ class Renamer(Matcher):
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
-            prt.print_warn('File {0} already exists!'.format(new_file), end=' ')
-            overwrite = input('Overwrite (y/n)? ')[0].lower()
-
-            if overwrite == 'y':
-                return True
-            else:
-                if overwrite != 'n':
-                    prt.print_info('Invalid option. File was not overwritten.')
-                return False
+            prt.print_warn(
+                'File {0} already exists!'.format(new_file),
+                end=' '
+            )
+            rename = input('Overwrite (y/n)? ')[0].lower()
+        elif self.options['confirm'] is True:
+            rename = input('Continue (y/n)? ')[0].lower()
         else:
             # if it doesn't exist continue with the rename
+            rename = 'y'
+
+        if rename == 'y':
             return True
+        else:
+            if rename != 'n':
+                prt.print_info('Invalid option. File was not overwritten.')
+            return False
 
 
 class Deleter(Matcher):
@@ -106,6 +111,10 @@ class Deleter(Matcher):
             for f in f_list:
                 if self.options['verbose'] is True:
                     print('Deleting {0}'.format(f))
+                if self.options['confirm'] is True:
+                    delete = self.confirm_delete(f)
+                    if not delete:
+                        return None
                 if f.is_file():
                     f.unlink()
                 elif f.is_dir() and self.options['directories'] is True:
@@ -116,3 +125,13 @@ class Deleter(Matcher):
                 else:
                     prt.print_warn('{0} is not a file or directory.'.format(f))
                     prt.print_info('{0} was not deleted.'.format(f))
+
+    def confirm_delete(self, f):
+        delete = input('Delete {0} (y/n)? '.format(f))[0].lower()
+
+        if delete == 'y':
+            return True
+        else:
+            if delete != 'n':
+                prt.print_info('Invalid option. File was not overwritten.')
+            return False

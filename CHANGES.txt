@@ -15,4 +15,11 @@ v0.2  --  2014-05-09
 
     * Added the -l option to set a depth limit on recursive searches.
     * Added the -i option to specify files to ignore.
-    * Tentative support for Python 2
+    * Tentative support for Python 2.
+
+v0.3  --  
+
+    * The ignore pattern is now specified with -I to be more inline with other
+      UNIX tools.
+    * Added the -i option to prompr for confirmation before any renames or
+      deletes.
