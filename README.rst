@@ -39,9 +39,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-rqvdlIi] ls [-h] PATTERN [DIR]
-    $ refile [-rqvdlIi] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-rqvdlIi] rm [-h] PATTERN [DIR]
+    $ refile [-rqvdlIif] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdlIif] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdlIif] rm [-h] PATTERN [DIR]
 
 
 General Usage
@@ -77,8 +77,9 @@ Most options are global, they are:
 -d, --directories       rename and delete (if empty) directories
 -l, --limit             maximum depth limit when searching recursively
 -I, --ignore            ignore any files which match this regex
--i, --check             prompt for confirmation before renaming or
+-i, --confirm           prompt for confirmation before renaming or
                             deleting any files
+-f, --force             never prompt for confirmation
 
 The only local options are for help on a specific command.
 

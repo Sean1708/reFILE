@@ -79,7 +79,10 @@ class Renamer(Matcher):
                     new_file = f.with_name(new_name)
                     print('Rename: {0} -> {1}'.format(f, new_file))
 
-                    rename = self.overwrite_guard(new_file)
+                    # only false if --force is set and --confirm is not set
+                    if (self.options['confirm'] is True or
+                            self.options['force'] is not True):
+                        rename = self.overwrite_guard(new_file)
                     if rename:
                         f.rename(new_file)
 

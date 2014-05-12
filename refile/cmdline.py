@@ -44,6 +44,11 @@ def setup_parser(parser):
         action='store_true',
         help='prompt for confirmation before renaming or deleting any files'
     )
+    parser.add_argument(
+        '-f', '--force',
+        action='store_true',
+        help='never prompt for confirmation'
+    )
 
 
 def setup_print(subparsers):

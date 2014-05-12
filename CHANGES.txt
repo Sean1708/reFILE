@@ -21,5 +21,6 @@ v0.3  --
 
     * The ignore pattern is now specified with -I to be more inline with other
       UNIX tools.
-    * Added the -i option to prompr for confirmation before any renames or
+    * Added the -i option to prompt for confirmation before any renames or
       deletes.
+    * Added the -f option to supress confirmation prompt.
