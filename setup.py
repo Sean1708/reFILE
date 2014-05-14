@@ -3,6 +3,22 @@ import refile
 from setuptools import setup
 
 
+with open('README.rst', 'w') as readme:
+    with open('readme_header.rst', 'r') as head:
+        readme.write(head.read())
+
+    with open('refile/__init__.py', 'r') as init:
+        init_lines = init.readlines()
+        # remove first 4 lines (first line will be blank)
+        init_lines = init_lines[4:]
+        # write the lines until the dend of docstring is reached
+        for line in init_lines:
+            if line[:3] == '"""':
+                break
+            else:
+                readme.write(line)
+
+
 install_requires = ['nose']
 # pathlib is new to std lib in 3.4
 if sys.version_info[:2] < (3, 4):

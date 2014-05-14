@@ -93,7 +93,7 @@ Most options are global, they are:
 -i, --confirm           prompt for confirmation before renaming or
                             deleting any files
 -f, --force             never prompt for confirmation
--m DIR, --moveto=DIR    move files into directory DIR
+-m DIR, --moveto=DIR    move file into directory dir
 
 The only local options are for help on a specific command.
 
@@ -154,3 +154,4 @@ Options
 -------
 
 -h, --help              print a useful help message
+
