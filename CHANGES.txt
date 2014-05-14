@@ -24,3 +24,4 @@ v0.3  --
     * Added the -i option to prompt for confirmation before any renames or
       deletes.
     * Added the -f option to supress confirmation prompt.
+    * Added -m option to move files to a specific directory.
