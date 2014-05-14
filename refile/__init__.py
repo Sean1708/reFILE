@@ -62,7 +62,7 @@ Listing Files
 
 Usage::
 
-    $ refile [-rqvdli] ls PATTERN [DIR]
+    $ refile [-rqvdlIifm] ls PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -79,7 +79,7 @@ Renaming Files
 
 Usage::
 
-    $ refile [-rqvdli] mv PATTERN REPLACE [DIR]
+    $ refile [-rqvdlIifm] mv PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -102,7 +102,7 @@ Deleting Files
 
 Usage::
 
-    $ refile [-rqvdli] rm PATTERN [DIR]
+    $ refile [-rqvdlIifm] rm PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the
