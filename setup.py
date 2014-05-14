@@ -7,6 +7,12 @@ install_requires = ['nose']
 # pathlib is new to std lib in 3.4
 if sys.version_info[:2] < (3, 4):
     install_requires.append('pathlib')
+# argparse is not in 2.6 or lower
+if sys.version_info[:2] < (2, 7):
+    install_requires.append('argparse')
+# it's not in 3.1 either
+elif sys.version_info[1] < 2:
+    install_requires.append('argparse')
 
 
 setup(
