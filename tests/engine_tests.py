@@ -21,7 +21,8 @@ def setup():
         'verbose': False,
         'directories': False,
         'limit': float('inf'),
-        'ignore': r'(?!.*)'
+        'ignore': r'(?!.*)',
+        'moveto': None
     }
 
     test_dir.mkdir()

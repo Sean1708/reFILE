@@ -48,6 +48,9 @@ class Matcher:
         # if it just holds true or false (i.e. 'recurse') then leave it and
         # access it straight from the dictionary using dict[]
 
+        ## --moveto
+        moveto = options.pop('moveto')
+        self.destination = pathlib.Path(moveto) if moveto else None
         ## --limit
         # ensure max depth is not negative
         self.max_depth = abs(options.pop('limit'))
@@ -76,7 +79,7 @@ class Renamer(Matcher):
                         self.options['directories'] is True):
                     new_name = self.regex.sub(self.replace, f.name)
                     # ensure file stays in same directory
-                    new_file = f.with_name(new_name)
+                    new_file = self.rename_file(f, new_name)
                     print('Rename: {0} -> {1}'.format(f, new_file))
 
                     # only false if --force is set and --confirm is not set
@@ -105,6 +108,12 @@ class Renamer(Matcher):
             if rename != 'n':
                 prt.print_info('Invalid option. File was not overwritten.')
             return False
+
+    def rename_file(self, old_file, new_name):
+        if self.destination:
+            return self.destination / new_name
+        else:
+            return old_file.with_name(new_name)
 
 
 class Deleter(Matcher):

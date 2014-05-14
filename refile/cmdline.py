@@ -49,6 +49,11 @@ def setup_parser(parser):
         action='store_true',
         help='never prompt for confirmation'
     )
+    parser.add_argument(
+        '-m', '--moveto',
+        action='store',
+        help='move files to the directory'
+    )
 
 
 def setup_print(subparsers):
