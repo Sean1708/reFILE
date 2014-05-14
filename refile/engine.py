@@ -27,12 +27,12 @@ class Matcher:
         self.current_depth += 1
 
         self.files[directory] = []
-        for f in directory.iterdir():
-            if self.regex.search(f.name) and not self.ignore.search(f.name):
-                self.files[directory].append(f)
-            if (self.options['recurse'] is True and f.is_dir()
+        for file in directory.iterdir():
+            if self.regex.search(file.name) and not self.ignore.search(file.name):
+                self.files[directory].append(file)
+            if (self.options['recurse'] is True and file.is_dir()
                     and self.current_depth <= self.max_depth):
-                self.match_files(f)
+                self.match_files(file)
 
         # once the for-loop has been finished a directory has been left
         self.current_depth -= 1
@@ -66,28 +66,28 @@ class Matcher:
 class Printer(Matcher):
 
     def run(self):
-        for d, f_list in self.files.items():
-            prt.print_files(d, f_list)
+        for directory, file_list in self.files.items():
+            prt.print_files(ddirectory, file_list)
 
 
 class Renamer(Matcher):
 
     def run(self):
-        for f_list in self.files.values():
-            for f in f_list:
-                if (f.is_file() or f.is_dir() and
+        for file_list in self.files.values():
+            for old_file in file_list:
+                if (old_file.is_file() or old_file.is_dir() and
                         self.options['directories'] is True):
-                    new_name = self.regex.sub(self.replace, f.name)
+                    new_name = self.regex.sub(self.replace, old_file.name)
                     # ensure file stays in same directory
-                    new_file = self.rename_file(f, new_name)
-                    print('Rename: {0} -> {1}'.format(f, new_file))
+                    new_file = self.rename_file(old_file, new_name)
+                    print('Rename: {0} -> {1}'.format(old_file, new_file))
 
                     # only false if --force is set and --confirm is not set
                     if (self.options['confirm'] is True or
                             self.options['force'] is not True):
                         rename = self.overwrite_guard(new_file)
                     if rename:
-                        f.rename(new_file)
+                        old_file.rename(new_file)
 
     def overwrite_guard(self, new_file):
         if new_file.exists():
@@ -119,27 +119,27 @@ class Renamer(Matcher):
 class Deleter(Matcher):
 
     def run(self):
-        for f_list in self.files.values():
-            for f in f_list:
+        for file_list in self.files.values():
+            for file in file_list:
                 if self.options['verbose'] is True:
-                    print('Deleting {0}'.format(f))
+                    print('Deleting {0}'.format(file))
                 if self.options['confirm'] is True:
-                    delete = self.confirm_delete(f)
+                    delete = self.confirm_delete(file)
                     if not delete:
                         return None
-                if f.is_file():
-                    f.unlink()
-                elif f.is_dir() and self.options['directories'] is True:
+                if file.is_file():
+                    file.unlink()
+                elif file.is_dir() and self.options['directories'] is True:
                     # if next() returns a file, directory is not empty and
                     # if-statement will evaluate to False
-                    if not next(f.iterdir(), False):
-                        f.rmdir()
+                    if not next(file.iterdir(), False):
+                        file.rmdir()
                 else:
-                    prt.print_warn('{0} is not a file or directory.'.format(f))
-                    prt.print_info('{0} was not deleted.'.format(f))
+                    prt.print_warn('{0} is not a file or directory.'.format(file))
+                    prt.print_info('{0} was not deleted.'.format(file))
 
-    def confirm_delete(self, f):
-        delete = input('Delete {0} (y/n)? '.format(f))[0].lower()
+    def confirm_delete(self, file):
+        delete = input('Delete {0} (y/n)? '.format(file))[0].lower()
 
         if delete == 'y':
             return True
