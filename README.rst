@@ -27,6 +27,19 @@ For this reason, it is reccomended that you use Python 3 to download reFILE.
 Having said this, however, reFILE should still work on Python 2 installations.
 
 
+------
+Issues
+------
+
+If you find any bugs or just generally have somee issues, feel free to open an
+issue ticket at my `github repo`_.
+
+.. _`github repo`: https://github.com/Sean1708/reFILE
+
+Alternatively, if you fancy fixing it yourself just send me a pull request or
+diff file via github and I'll be happy to incorporate your code.
+
+
 -------------
 Documentation
 -------------
@@ -39,9 +52,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-rqvdlIif] ls [-h] PATTERN [DIR]
-    $ refile [-rqvdlIif] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-rqvdlIif] rm [-h] PATTERN [DIR]
+    $ refile [-rqvdlIifm] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdlIifm] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdlIifm] rm [-h] PATTERN [DIR]
 
 
 General Usage
@@ -75,11 +88,12 @@ Most options are global, they are:
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
--l, --limit             maximum depth limit when searching recursively
--I, --ignore            ignore any files which match this regex
+-l LIM, --limit=LIM     maximum depth limit when searching recursively
+-I PAT, --ignore=PAT    ignore any files which match the regex PAT
 -i, --confirm           prompt for confirmation before renaming or
                             deleting any files
 -f, --force             never prompt for confirmation
+-m DIR, --moveto=DIR    move files into directory DIR
 
 The only local options are for help on a specific command.
 

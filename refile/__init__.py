@@ -11,9 +11,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-rqvdlIif] ls [-h] PATTERN [DIR]
-    $ refile [-rqvdlIif] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-rqvdlIif] rm [-h] PATTERN [DIR]
+    $ refile [-rqvdlIifm] ls [-h] PATTERN [DIR]
+    $ refile [-rqvdlIifm] mv [-h] PATTERN REPLACE [DIR]
+    $ refile [-rqvdlIifm] rm [-h] PATTERN [DIR]
 
 
 General Usage
@@ -47,11 +47,12 @@ Most options are global, they are:
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
 -d, --directories       rename and delete (if empty) directories
--l, --limit             maximum depth limit when searching recursively
--I, --ignore            ignore any files which match this regex
+-l LIM, --limit=LIM     maximum depth limit when searching recursively
+-I PAT, --ignore=PAT    ignore any files which match the regex PAT
 -i, --confirm           prompt for confirmation before renaming or
                             deleting any files
 -f, --force             never prompt for confirmation
+-m DIR, --moveto=DIR    move file into directory dir
 
 The only local options are for help on a specific command.
 
