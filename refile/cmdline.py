@@ -3,7 +3,7 @@ import argparse
 from . import engine
 
 
-def setup_parser(parser):
+def setup_all_share(parser):
     parser.add_argument(
         '-r', '--recurse',
         action='store_true',
@@ -18,11 +18,6 @@ def setup_parser(parser):
         '-v', '--verbose',
         action='store_true',
         help='print extra information'
-    )
-    parser.add_argument(
-        '-d', '--directories',
-        action='store_true',
-        help='delete and rename directories'
     )
     # use infinity as default so that limit can't be reached if not specified
     parser.add_argument(
@@ -39,6 +34,14 @@ def setup_parser(parser):
         default=r'(?!.*)',
         help='ignore files matching this regex'
     )
+
+
+def setup_mvrm_share(parser):
+    parser.add_argument(
+        '-d', '--directories',
+        action='store_true',
+        help='delete and rename directories'
+    )
     parser.add_argument(
         '-i', '--confirm',
         action='store_true',
@@ -49,17 +52,13 @@ def setup_parser(parser):
         action='store_true',
         help='never prompt for confirmation'
     )
-    parser.add_argument(
-        '-m', '--moveto',
-        action='store',
-        help='move files to the directory'
-    )
 
 
-def setup_print(subparsers):
+def setup_print(subparsers, parents):
     print_cmd = subparsers.add_parser(
         'ls',
-        help='print the names of files which match the regex pattern'
+        help='print the names of files which match the regex pattern',
+        parents=parents
     )
     print_cmd.add_argument('PATTERN', help='regex to match filenames against')
     print_cmd.add_argument(
@@ -71,10 +70,11 @@ def setup_print(subparsers):
     print_cmd.set_defaults(cls=engine.Printer)
 
 
-def setup_rename(subparsers):
+def setup_rename(subparsers, parents):
     rename = subparsers.add_parser(
         'mv',
-        help='rename matching files according to replace string'
+        help='rename matching files according to replace string',
+        parents=parents
     )
     rename.add_argument('PATTERN', help='regex to match filenames against')
     rename.add_argument('REPLACE', help='pattern to rename files')
@@ -84,13 +84,19 @@ def setup_rename(subparsers):
         default='.',
         help='directory to search (defaults to current directory)'
     )
+    rename.add_argument(
+        '-m', '--moveto',
+        action='store',
+        help='move files to the directory'
+    )
     rename.set_defaults(cls=engine.Renamer)
 
 
-def setup_delete(subparsers):
+def setup_delete(subparsers, parents):
     delete = subparsers.add_parser(
         'rm',
-        help='delete files which match the regex'
+        help='delete files which match the regex',
+        parents=parents
     )
     delete.add_argument('PATTERN', help='regex to match filenames against')
     delete.add_argument(
@@ -105,13 +111,19 @@ def setup_delete(subparsers):
 def main():
     parser = argparse.ArgumentParser(
         description="""Interact with files whose names match regular
-        expressions. See `pydoc3 refile` for comprehensive documentation."""
+        expressions. See `pydoc refile` for comprehensive documentation."""
     )
-    setup_parser(parser)
+    # arguments that all commands share
+    all_share = argparse.ArgumentParser(add_help=False)
+    setup_all_share(all_share)
+    # arguments that mv and rm share
+    mvrm_share = argparse.ArgumentParser(add_help=False)
+    setup_mvrm_share(mvrm_share)
+
     subparsers = parser.add_subparsers(title='subcommands')
-    setup_print(subparsers)
-    setup_rename(subparsers)
-    setup_delete(subparsers)
+    setup_print(subparsers, [all_share])
+    setup_rename(subparsers, [all_share, mvrm_share])
+    setup_delete(subparsers, [all_share, mvrm_share])
 
     # get dictionary of the command line arguments
     args = vars(parser.parse_args())

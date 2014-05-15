@@ -11,9 +11,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile [-rqvdlIifm] ls [-h] PATTERN [DIR]
-    $ refile [-rqvdlIifm] mv [-h] PATTERN REPLACE [DIR]
-    $ refile [-rqvdlIifm] rm [-h] PATTERN [DIR]
+    $ refile ls [-h] [-rqv] [-l LIM] [-I PAT] PATTERN [DIR]
+    $ refile mv [-h] [-rqvdif] [-l LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
+    $ refile rm [-h] [-rqvdif] [-l LIM] [-I PAT] PATTERN [DIR]
 
 
 General Usage
@@ -37,24 +37,15 @@ the program so wrapping your directory in single quotes is ill-advised.
 Options
 -------
 
-reFILE uses the idea of global and local options. Global options are available
-for all subcommands and must be place before the subcommand whereas local
-options are specific to a subcommand and must be placed after the subcommand.
-Most options are global, they are:
+All options in reFILE must be specified after the subcommand. Many of the
+options are shared between subcommands, they are:
 
 -h, --help              print a useful help message
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
--d, --directories       rename and delete (if empty) directories
 -l LIM, --limit=LIM     maximum depth limit when searching recursively
 -I PAT, --ignore=PAT    ignore any files which match the regex PAT
--i, --confirm           prompt for confirmation before renaming or
-                            deleting any files
--f, --force             never prompt for confirmation
--m DIR, --moveto=DIR    move file into directory dir
-
-The only local options are for help on a specific command.
 
 
 Listing Files
@@ -62,7 +53,7 @@ Listing Files
 
 Usage::
 
-    $ refile [-rqvdlIifm] ls PATTERN [DIR]
+    $ refile ls [-h] [-rqv] [-l LIM] [-I PAT] PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -79,7 +70,7 @@ Renaming Files
 
 Usage::
 
-    $ refile [-rqvdlIifm] mv PATTERN REPLACE [DIR]
+    $ refile mv [-h] [-rqvdif] [-l LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -95,6 +86,10 @@ Options
 -------
 
 -h, --help              print a useful help message
+-d, --directories       rename directories
+-i, --confirm           prompt for confirmation before renaming files
+-f, --force             never prompt for confirmation
+-m DIR, --moveto=DIR    move files into directory DIR
 
 
 Deleting Files
@@ -102,7 +97,7 @@ Deleting Files
 
 Usage::
 
-    $ refile [-rqvdlIifm] rm PATTERN [DIR]
+    $ refile rm [-h] [-rqvdif] [-l LIM] [-I PAT] PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the
@@ -113,6 +108,9 @@ Options
 -------
 
 -h, --help              print a useful help message
+-d, --directories       delete directories if empty
+-i, --confirm           prompt for confirmation before deleting files
+-f, --force             never prompt for confirmation
 
 """
 
