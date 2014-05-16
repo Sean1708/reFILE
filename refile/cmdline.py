@@ -67,6 +67,11 @@ def setup_print(subparsers, parents):
         default='.',
         help='directory to search (defaults to current directory)'
     )
+    print_cmd.add_argument(
+        '-n', '--no-column',
+        action='store_true',
+        help='disable columnated ouput'
+    )
     print_cmd.set_defaults(cls=engine.Printer)
 
 

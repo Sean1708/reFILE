@@ -52,7 +52,7 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile ls [-h] [-rqv] [-l LIM] [-I PAT] PATTERN [DIR]
+    $ refile ls [-h] [-rqvn] [-l LIM] [-I PAT] PATTERN [DIR]
     $ refile mv [-h] [-rqvdif] [-l LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
     $ refile rm [-h] [-rqvdif] [-l LIM] [-I PAT] PATTERN [DIR]
 
@@ -104,6 +104,7 @@ Options
 -------
 
 -h, --help              print a useful help message
+-n, --no-column         suppress columnated output
 
 
 Renaming Files

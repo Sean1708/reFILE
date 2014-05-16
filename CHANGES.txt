@@ -25,3 +25,5 @@ v0.3  --
       deletes.
     * Added the -f option to supress confirmation prompt.
     * Added -m option to move files to a specific directory.
+    * Verbose option now prints out each directory as it's searched.
+    * Added columnated output and -n option to turn it off.

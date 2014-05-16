@@ -75,7 +75,10 @@ class Printer(Matcher):
 
     def run(self):
         for directory, file_list in self.files.items():
-            prt.print_files(directory, file_list)
+            if self.options['no_column'] is True:
+                prt.print_single_column(directory, file_list)
+            else:
+                prt.print_files(directory, file_list)
 
 
 class Renamer(Matcher):
