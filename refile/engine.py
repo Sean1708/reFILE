@@ -49,7 +49,8 @@ class Matcher:
         # access it straight from the dictionary using dict[]
 
         ## --moveto
-        moveto = options.pop('moveto')
+        # moveto is not set for all options so default it to none
+        moveto = options.pop('moveto', None)
         self.destination = pathlib.Path(moveto) if moveto else None
         ## --limit
         # ensure max depth is not negative
@@ -67,7 +68,7 @@ class Printer(Matcher):
 
     def run(self):
         for directory, file_list in self.files.items():
-            prt.print_files(ddirectory, file_list)
+            prt.print_files(directory, file_list)
 
 
 class Renamer(Matcher):
