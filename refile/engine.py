@@ -23,6 +23,9 @@ class Matcher:
             prt.print_err('{0} is not a directory.'.format(directory))
             sys.exit()
 
+        if self.options['verbose'] is True:
+            prt.print_info('Searching {0}'.format(directory))
+
         # each time this func is called a new directory has been entered
         self.current_depth += 1
 
