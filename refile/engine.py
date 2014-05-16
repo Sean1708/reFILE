@@ -30,9 +30,13 @@ class Matcher:
         for file in directory.iterdir():
             if self.regex.search(file.name) and not self.ignore.search(file.name):
                 self.files[directory].append(file)
-            if (self.options['recurse'] is True and file.is_dir()
-                    and self.current_depth <= self.max_depth):
-                self.match_files(file)
+            # avoid crashing on symlink loops
+            try:
+                if (self.options['recurse'] is True and file.is_dir()
+                        and self.current_depth <= self.max_depth):
+                    self.match_files(file)
+            except OSError:
+                prt.print_warn('Symlink loop from {0}'.format(file))
 
         # once the for-loop has been finished a directory has been left
         self.current_depth -= 1
