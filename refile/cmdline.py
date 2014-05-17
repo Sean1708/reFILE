@@ -140,6 +140,7 @@ def main():
     try:
         # no point telling the class which class it is, it already knows
         cmd = args.pop('cls')
-        cmd(**args).run()
     except KeyError:
         parser.print_help()
+    else:
+        cmd(**args).run()
