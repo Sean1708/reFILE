@@ -1,7 +1,11 @@
 # the future statement in __init__.py isn't picked up for some reason
 from __future__ import print_function
+import datetime
 import shutil
+import time
+import stat
 import sys
+import os
 
 
 def print_err(msg='unknown error', **kwargs):
@@ -34,14 +38,6 @@ def print_files(directory, file_list):
         print(directory)
     print('\n'.join(print_list))
 
-def print_single_column(directory, file_list):
-    # if not current directory
-    if directory.name != '' and file_list:
-        print(directory, end='\n  ')
-        print('\n  '.join(f.name for f in file_list))
-    elif file_list:
-        print('\n'.join(f.name for f in file_list))
-
 def pack_files(files, width, directory):
     """Sort files into columns.
 
@@ -63,3 +59,36 @@ def pack_files(files, width, directory):
             lines.append(START + file.name + ' '*(col_width - len(file.name)))
 
     return lines
+
+def print_single_column(directory, file_list):
+    # if not current directory
+    if directory.name != '' and file_list:
+        print(directory, end='\n  ')
+        print('\n  '.join(f.name for f in file_list))
+    elif file_list:
+        print('\n'.join(f.name for f in file_list))
+
+def print_long_format(directory, file_list):
+    lines = []
+    for file in file_list:
+        st = file.lstat()
+        file_mod_time = os.path.getmtime(str(file))
+        current_time = time.time()
+        sec_in_year = 365.25 * 24 * 60 * 60
+        if current_time - file_mod_time > sec_in_year:
+            file_mod_time = datetime.datetime.fromtimestamp(
+                float(file_mod_time)
+            ).strftime('%d %b  %Y')
+        else:
+            file_mod_time = datetime.datetime.fromtimestamp(
+                float(file_mod_time)
+            ).strftime('%d %b %H:%M')
+        lines.append('{0}  {1:4}  {2:6}  {3}  {4}'.format(
+            stat.filemode(st.st_mode),
+            st.st_nlink,
+            st.st_size,
+            file_mod_time,
+            file.name
+        ))
+
+    print('\n'.join(lines))

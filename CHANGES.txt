@@ -28,3 +28,4 @@ v0.3  --
     * Verbose option now prints out each directory as it's searched.
     * Added columnated output and -n option to turn it off.
     * Changed -l to -L.
+    * -l now produces long format similar to the same option on UNIX ls.

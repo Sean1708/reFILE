@@ -72,6 +72,11 @@ def setup_print(subparsers, parents):
         action='store_true',
         help='disable columnated ouput'
     )
+    print_cmd.add_argument(
+        '-l', '--long',
+        action='store_true',
+        help='print extra information'
+    )
     print_cmd.set_defaults(cls=engine.Printer)
 
 

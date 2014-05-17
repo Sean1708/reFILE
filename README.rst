@@ -94,7 +94,7 @@ Listing Files
 
 Usage::
 
-    $ refile ls [-h] [-rqv] [-L LIM] [-I PAT] PATTERN [DIR]
+    $ refile ls [-h] [-rqvl] [-L LIM] [-I PAT] PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -105,6 +105,7 @@ Options
 
 -h, --help              print a useful help message
 -n, --no-column         suppress columnated output
+-l, --long              print extra information about the files
 
 
 Renaming Files
