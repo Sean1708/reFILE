@@ -21,7 +21,7 @@ def setup_all_share(parser):
     )
     # use infinity as default so that limit can't be reached if not specified
     parser.add_argument(
-        '-l', '--limit',
+        '-L', '--limit',
         action='store',
         type=int,
         default=float('inf'),

@@ -52,9 +52,9 @@ expression.
 Usage::
 
     $ refile -h
-    $ refile ls [-h] [-rqvn] [-l LIM] [-I PAT] PATTERN [DIR]
-    $ refile mv [-h] [-rqvdif] [-l LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
-    $ refile rm [-h] [-rqvdif] [-l LIM] [-I PAT] PATTERN [DIR]
+    $ refile ls [-h] [-rqvn] [-L LIM] [-I PAT] PATTERN [DIR]
+    $ refile mv [-h] [-rqvdif] [-L LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
+    $ refile rm [-h] [-rqvdif] [-L LIM] [-I PAT] PATTERN [DIR]
 
 
 General Usage
@@ -85,7 +85,7 @@ options are shared between subcommands, they are:
 -r, --recurse           search directories recursively
 -q, --quiet             supress all output except errors
 -v, --verbose           print extra information
--l LIM, --limit=LIM     maximum depth limit when searching recursively
+-L LIM, --limit=LIM     maximum depth limit when searching recursively
 -I PAT, --ignore=PAT    ignore any files which match the regex PAT
 
 
@@ -94,7 +94,7 @@ Listing Files
 
 Usage::
 
-    $ refile ls [-h] [-rqv] [-l LIM] [-I PAT] PATTERN [DIR]
+    $ refile ls [-h] [-rqv] [-L LIM] [-I PAT] PATTERN [DIR]
 
 The ``ls`` subcommand lists all files in the directory ``DIR`` which match the
 regular expression ``PATTERN``. Internally this is run using the ``re.search``
@@ -112,7 +112,7 @@ Renaming Files
 
 Usage::
 
-    $ refile mv [-h] [-rqvdif] [-l LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
+    $ refile mv [-h] [-rqvdif] [-L LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -139,7 +139,7 @@ Deleting Files
 
 Usage::
 
-    $ refile rm [-h] [-rqvdif] [-l LIM] [-I PAT] PATTERN [DIR]
+    $ refile rm [-h] [-rqvdif] [-L LIM] [-I PAT] PATTERN [DIR]
 
 The ``rm`` subcommand deletes all files in the directory ``DIR`` which match
 regular expression ``PATTERN``. The search is performed identically to the
