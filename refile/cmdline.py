@@ -99,6 +99,11 @@ def setup_rename(subparsers, parents):
         action='store',
         help='move files to the directory'
     )
+    rename.add_argument(
+        '-D', '--date',
+        action='store',
+        help='strftime format string to be prepended to the name'
+    )
     rename.set_defaults(cls=engine.Renamer)
 
 

@@ -2,6 +2,7 @@ import re
 import os
 import sys
 import pathlib
+import datetime
 from . import printing as prt
 from collections import OrderedDict
 
@@ -123,6 +124,13 @@ class Renamer(Matcher):
             return False
 
     def rename_file(self, old_file, new_name):
+        if self.options['date']:
+            creation_time = os.path.getctime(str(old_file))
+            date_str = datetime.datetime.fromtimestamp(
+                float(creation_time)
+            ).strftime(self.options['date'])
+            new_name = date_str + new_name
+
         if self.destination:
             return self.destination / new_name
         else:

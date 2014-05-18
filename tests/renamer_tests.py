@@ -28,6 +28,7 @@ def setup():
         'ignore': r'(?!.*)',
         'confirm': False,
         'force': False,
+        'date': None,
         'moveto': None
     }
 
