@@ -17,7 +17,6 @@ class Matcher:
 
         self.files = OrderedDict()
         self.current_depth = 0
-        self.match_files(self.directory)
 
     def match_files(self, directory):
         if not directory.is_dir():
@@ -156,7 +155,7 @@ class Deleter(Matcher):
                     if not next(file.iterdir(), False):
                         file.rmdir()
                 else:
-                    prt.print_warn('{0} is not a file or directory.'.format(file))
+                    prt.print_warn('{0} is not a file/directory.'.format(file))
                     prt.print_info('{0} was not deleted.'.format(file))
 
     def confirm_delete(self, file):

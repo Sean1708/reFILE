@@ -63,6 +63,7 @@ def test_rename():
         r'\1picture',
         **args
     )
+    renamer.match_files(renamer.directory)
     renamer.run()
     p = pathlib.Path(directory)
     renamed_files = set(f.name for f in p.iterdir())
@@ -82,6 +83,7 @@ def test_rename():
         r'picture',
         **args
     )
+    renamer.match_files(renamer.directory)
     renamer.run()
     p = pathlib.Path(directory)
     renamed_files = set(f.name for f in p.iterdir())

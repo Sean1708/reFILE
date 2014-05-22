@@ -44,6 +44,7 @@ def test_init():
         pattern, directory, replace,
         **args
     )
+    engine.match_files(engine.directory)
 
     assert_equal(engine.regex, re.compile(pattern))
     assert_equal(engine.replace, replace)
@@ -54,6 +55,7 @@ def test_init():
 
 def test_match_files():
     matcher = Matcher(r'[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory, **args)
+    matcher.match_files(matcher.directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
@@ -61,6 +63,7 @@ def test_match_files():
     assert_set_equal(set(files), set(matched_files))
 
     matcher = Matcher(r'^[0-9]{4}-?[01][0-9]-?[0-3][0-9]', directory, **args)
+    matcher.match_files(matcher.directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:
@@ -68,6 +71,7 @@ def test_match_files():
     assert_set_equal(set(files[:4]), set(matched_files))
 
     matcher = Matcher(r'[0-9]{4}-[01][0-9]-[0-3][0-9]', directory, **args)
+    matcher.match_files(matcher.directory)
     matched_files = []
     for f_list in matcher.files.values():
         for f in f_list:

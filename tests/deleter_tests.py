@@ -61,6 +61,7 @@ def test_delete():
         directory,
         **args
     )
+    deleter.match_files(deleter.directory)
     deleter.run()
     p = pathlib.Path(directory)
     remaining_files = set(f.name for f in p.iterdir())
@@ -75,6 +76,7 @@ def test_delete():
         directory,
         **args
     )
+    deleter.match_files(deleter.directory)
     deleter.run()
     p = pathlib.Path(directory)
     remaining_files = set(f.name for f in p.iterdir())

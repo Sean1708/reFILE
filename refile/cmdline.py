@@ -77,7 +77,7 @@ def setup_print(subparsers, parents):
         action='store_true',
         help='print extra information'
     )
-    print_cmd.set_defaults(cls=engine.Printer)
+    print_cmd.set_defaults(cmd=engine.Printer)
 
 
 def setup_rename(subparsers, parents):
@@ -104,7 +104,7 @@ def setup_rename(subparsers, parents):
         action='store',
         help='strftime format string to be prepended to the name'
     )
-    rename.set_defaults(cls=engine.Renamer)
+    rename.set_defaults(cmd=engine.Renamer)
 
 
 def setup_delete(subparsers, parents):
@@ -120,7 +120,7 @@ def setup_delete(subparsers, parents):
         default='.',
         help='directory to search (defaults to current directory)'
     )
-    delete.set_defaults(cls=engine.Deleter)
+    delete.set_defaults(cmd=engine.Deleter)
 
 
 def main():
@@ -145,12 +145,14 @@ def main():
     # running `python refile/cmdline.py` works as expected but once installed
     # with entry_points, running `refile` does not bring up the usual argparse
     # error but instead keeps on running and raises KeyError since there is no
-    # cls if no subcommand has been selected
+    # cmd if no subcommand has been selected
     # this try statement gets around it but feels a bit hacky for my liking
     try:
         # no point telling the class which class it is, it already knows
-        cmd = args.pop('cls')
+        Command = args.pop('cmd')
     except KeyError:
         parser.print_help()
     else:
-        cmd(**args).run()
+        program = Command(**args)
+        program.match_files(program.directory)
+        program.run()
