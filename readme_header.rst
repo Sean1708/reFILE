@@ -32,7 +32,7 @@ Issues
 ------
 
 If you find any bugs or just generally have somee issues, feel free to open an
-issue ticket at my github repo (https://github.com/Sean1708/reFILE).
+issue ticket at my github repo.
 
 Alternatively, if you fancy fixing it yourself just send me a pull request or
 diff file via github and I'll be happy to incorporate your code.
