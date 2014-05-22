@@ -32,9 +32,7 @@ Issues
 ------
 
 If you find any bugs or just generally have somee issues, feel free to open an
-issue ticket at my `github repo`_.
-
-.. _`github repo`: https://github.com/Sean1708/reFILE
+issue ticket at my github repo (https://github.com/Sean1708/reFILE).
 
 Alternatively, if you fancy fixing it yourself just send me a pull request or
 diff file via github and I'll be happy to incorporate your code.
@@ -81,12 +79,12 @@ Options
 All options in reFILE must be specified after the subcommand. Many of the
 options are shared between subcommands, they are:
 
--h, --help              print a useful help message
--r, --recurse           search directories recursively
--q, --quiet             supress all output except errors
--v, --verbose           print extra information
--L LIM, --limit=LIM     maximum depth limit when searching recursively
--I PAT, --ignore=PAT    ignore any files which match the regex PAT
+-h, --help               print a useful help message
+-r, --recurse            search directories recursively
+-q, --quiet              supress all output except errors
+-v, --verbose            print extra information
+-L LIM, --limit=LIM      maximum depth limit when searching recursively
+-I PAT, --ignore=PAT     ignore any files which match the regex PAT
 
 
 Listing Files
@@ -103,9 +101,9 @@ function so the pattern can match any part of the filename, not just the start.
 Options
 -------
 
--h, --help              print a useful help message
--n, --no-column         suppress columnated output
--l, --long              print extra information about the files
+-h, --help               print a useful help message
+-n, --no-column          suppress columnated output
+-l, --long               print extra information about the files
 
 
 Renaming Files
@@ -113,7 +111,8 @@ Renaming Files
 
 Usage::
 
-    $ refile mv [-h] [-rqvdif] [-L LIM] [-I PAT] [-m DIR] PATTERN REPLACE [DIR]
+    $ refile mv [-h] [-rqvdif] [-L LIM] [-I PAT] [-m DIR] [-D FORMAT]
+                PATTERN REPLACE [DIR]
 
 The ``mv`` subcommand renames any file in the directory ``DIR`` which matches
 the regular expression ``PATTERN`` to the name ``RENAME``. This is run
@@ -125,14 +124,20 @@ regular expression matches the entire filename then ``PATTERN`` and ``REPLACE``
 must contain groups and backreferences to avoid files overwriting eachother.
 This is not checked at run-time so it is up to the user to ensure proper usage.
 
+If the ``-D`` option is specified the creation time of the file will be
+prepended to the ``REPLACE`` string before the rename takes place. The
+``FORMAT`` string is passed to the ``time.strftime`` function so refer to that
+for more information.
+
 Options
 -------
 
--h, --help              print a useful help message
--d, --directories       rename directories
--i, --confirm           prompt for confirmation before renaming files
--f, --force             never prompt for confirmation
--m DIR, --moveto=DIR    move files into directory DIR
+-h, --help               print a useful help message
+-d, --directories        rename directories
+-i, --confirm            prompt for confirmation before renaming files
+-f, --force              never prompt for confirmation
+-m DIR, --moveto=DIR     move files into directory DIR
+-D FORMAT, --date=FORMAT prepend creation time according to strftime format
 
 
 Deleting Files
@@ -150,8 +155,8 @@ files is to run the command as ``ls`` first.
 Options
 -------
 
--h, --help              print a useful help message
--d, --directories       delete directories if empty
--i, --confirm           prompt for confirmation before deleting files
--f, --force             never prompt for confirmation
+-h, --help               print a useful help message
+-d, --directories        delete directories if empty
+-i, --confirm            prompt for confirmation before deleting files
+-f, --force              never prompt for confirmation
 
