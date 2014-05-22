@@ -31,7 +31,7 @@ class Matcher:
 
         self.files[directory] = []
         for file in directory.iterdir():
-            if self.regex.search(file.name) and not self.ignore.search(file.name):
+            if self.match_pattern(file.name):
                 self.files[directory].append(file)
             # avoid crashing on symlink loops
             try:
@@ -55,16 +55,23 @@ class Matcher:
         # if it just holds true or false (i.e. 'recurse') then leave it and
         # access it straight from the dictionary using dict[]
 
-        ## --moveto
         # moveto is not set for all options so default it to none
         moveto = options.pop('moveto', None)
         self.destination = pathlib.Path(moveto) if moveto else None
-        ## --limit
-        # ensure max depth is not negative
+
         self.max_depth = abs(options.pop('limit'))
-        ## --ignore
-        self.ignore = re.compile(options.pop('ignore'))
-        ## --quiet
+
+        self.ignore = options.pop('ignore')
+        if self.ignore:
+            self.ignore = re.compile(self.ignore)
+            def _match_pattern(filename):
+                return (self.regex.search(filename) and not
+                        self.ignore.search(filename))
+        else:
+            def _match_pattern(filename):
+                return self.regex.search(filename)
+        self.match_pattern = _match_pattern
+
         if options.pop('quiet', False):
             sys.stdout = open(os.devnull, 'w')
 

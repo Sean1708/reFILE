@@ -31,7 +31,6 @@ def setup_all_share(parser):
     parser.add_argument(
         '-I', '--ignore',
         action='store',
-        default=r'(?!.*)',
         help='ignore files matching this regex'
     )
 
