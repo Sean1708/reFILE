@@ -126,7 +126,7 @@ Options
 from __future__ import absolute_import, print_function
 
 __title__ = 'reFILE'
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 __author__ = 'Sean Marshallsay'
 __email__ = 'srm.1708@gmail.com'
 __description__ = 'Utility for manipulating files via regex.'
