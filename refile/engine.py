@@ -21,7 +21,7 @@ class Matcher:
     def match_files(self, directory):
         if not directory.is_dir():
             prt.print_err('{0} is not a directory.'.format(directory))
-            sys.exit()
+            sys.exit(-1)
 
         if self.options['verbose'] is True:
             prt.print_info('Searching {0}'.format(directory))
