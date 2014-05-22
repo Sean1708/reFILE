@@ -40,12 +40,12 @@ Options
 All options in reFILE must be specified after the subcommand. Many of the
 options are shared between subcommands, they are:
 
--h, --help               print a useful help message
--r, --recurse            search directories recursively
--q, --quiet              supress all output except errors
--v, --verbose            print extra information
--L LIM, --limit=LIM      maximum depth limit when searching recursively
--I PAT, --ignore=PAT     ignore any files which match the regex PAT
+-h, --help                print a useful help message
+-r, --recurse             search directories recursively
+-q, --quiet               supress all output except errors
+-v, --verbose             print extra information
+-L LIM, --limit=LIM       maximum depth limit when searching recursively
+-I PAT, --ignore=PAT      ignore any files which match the regex PAT
 
 
 Listing Files
@@ -62,9 +62,9 @@ function so the pattern can match any part of the filename, not just the start.
 Options
 -------
 
--h, --help               print a useful help message
--n, --no-column          suppress columnated output
--l, --long               print extra information about the files
+-h, --help                print a useful help message
+-n, --no-column           suppress columnated output
+-l, --long                print extra information about the files
 
 
 Renaming Files
@@ -93,12 +93,12 @@ for more information.
 Options
 -------
 
--h, --help               print a useful help message
--d, --directories        rename directories
--i, --confirm            prompt for confirmation before renaming files
--f, --force              never prompt for confirmation
--m DIR, --moveto=DIR     move files into directory DIR
--D FORMAT, --date=FORMAT prepend creation time according to strftime format
+-h, --help                print a useful help message
+-d, --directories         rename directories
+-i, --confirm             prompt for confirmation before renaming files
+-f, --force               never prompt for confirmation
+-m DIR, --moveto=DIR      move files into directory DIR
+-D FORMAT, --date=FORMAT  prepend creation time according to strftime format
 
 
 Deleting Files
@@ -126,7 +126,7 @@ Options
 from __future__ import absolute_import, print_function
 
 __title__ = 'reFILE'
-__version__ = '0.3.3'
+__version__ = '0.4'
 __author__ = 'Sean Marshallsay'
 __email__ = 'srm.1708@gmail.com'
 __description__ = 'Utility for manipulating files via regex.'
