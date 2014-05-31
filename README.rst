@@ -40,6 +40,15 @@ Alternatively, if you fancy fixing it yourself just send me a pull request or
 diff file via github and I'll be happy to incorporate your code.
 
 
+-------
+Library
+-------
+
+I have plans to make this package usable as a library but at the moment am
+unsure how best to approach it. If you have any thoughts feel free to contact
+me.
+
+
 -------------
 Documentation
 -------------

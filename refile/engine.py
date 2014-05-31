@@ -8,6 +8,9 @@ from collections import OrderedDict
 
 
 class Matcher:
+    """Define methods which are used by all class to match files.
+
+    """
 
     def __init__(self, PATTERN, DIR, REPLACE=None, **kwargs):
         self.regex = re.compile(PATTERN)
@@ -19,6 +22,10 @@ class Matcher:
         self.current_depth = 0
 
     def match_files(self, directory):
+        """Recursively search file hierachy, matching filenames against the regex.
+
+        """
+
         if not directory.is_dir():
             prt.print_err('{0} is not a directory.'.format(directory))
             sys.exit(-1)
@@ -50,10 +57,9 @@ class Matcher:
             del self.files[directory]
 
     def parse_options(self, options):
-        # remove any flags which require a specific action and perform the
-        # action
-        # if it just holds true or false (i.e. 'recurse') then leave it and
-        # access it straight from the dictionary using dict[]
+        """Perform actions required for specific options.
+
+        """
 
         # moveto is not set for all options so default it to none
         moveto = options.pop('moveto', None)
@@ -79,8 +85,15 @@ class Matcher:
 
 
 class Printer(Matcher):
+    """Print matched files in the specified format.
+
+    """
 
     def run(self):
+        """Print matched files in the specified format.
+
+        """
+
         for directory, file_list in self.files.items():
             if self.options['long'] is True:
                 prt.print_long_format(directory, file_list)
@@ -91,14 +104,20 @@ class Printer(Matcher):
 
 
 class Renamer(Matcher):
+    """Rename the files which were matched.
+
+    """
 
     def run(self):
+        """Rename the files which were matched.
+
+        """
+
         for file_list in self.files.values():
             for old_file in file_list:
                 if (old_file.is_file() or old_file.is_dir() and
                         self.options['directories'] is True):
                     new_name = self.regex.sub(self.replace, old_file.name)
-                    # ensure file stays in same directory
                     new_file = self.rename_file(old_file, new_name)
                     print('Rename: {0} -> {1}'.format(old_file, new_file))
 
@@ -110,6 +129,10 @@ class Renamer(Matcher):
                         old_file.rename(new_file)
 
     def overwrite_guard(self, new_file):
+        """Ensure files are not accidently overwritten.
+
+        """
+
         if new_file.exists():
             prt.print_warn(
                 'File {0} already exists!'.format(new_file),
@@ -130,6 +153,10 @@ class Renamer(Matcher):
             return False
 
     def rename_file(self, old_file, new_name):
+        """Create date string and handle moving file to new folder.
+
+        """
+
         if self.options['date']:
             creation_time = os.path.getctime(str(old_file))
             date_str = datetime.datetime.fromtimestamp(
@@ -144,8 +171,15 @@ class Renamer(Matcher):
 
 
 class Deleter(Matcher):
+    """Delete files that were matched.
+
+    """
 
     def run(self):
+        """Delete files that were matched.
+
+        """
+
         for file_list in self.files.values():
             for file in file_list:
                 if self.options['verbose'] is True:
@@ -166,6 +200,10 @@ class Deleter(Matcher):
                     prt.print_info('{0} was not deleted.'.format(file))
 
     def confirm_delete(self, file):
+        """Ask for user confirmation to delete.
+
+        """
+
         delete = input('Delete {0} (y/n)? '.format(file))[0].lower()
 
         if delete == 'y':

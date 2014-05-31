@@ -9,21 +9,37 @@ import os
 
 
 def print_err(msg='unknown error', **kwargs):
+    """Print errors.
+
+    """
+
     ERROR = '\033[31mError:\033[0m'
     print(ERROR, msg, **kwargs)
 
 
 def print_warn(msg='unknown warning', **kwargs):
+    """Print warnings.
+
+    """
+
     WARNING = '\033[33mWarning:\033[0m'
     print(WARNING, msg, **kwargs)
 
 
 def print_info(msg='well this isn\'t particularly helpful', **kwargs):
+    """Print information.
+
+    """
+
     INFO = '\033[34mInfo:\033[0m'
     print(INFO, msg, **kwargs)
 
 
 def print_files(directory, file_list):
+    """Print files as either a single column or multiple columns.
+
+    """
+
     # get_terminal_size is new in 3.3
     if sys.version_info[:2] < (3, 3):
         return print_single_column(directory, file_list)
@@ -51,6 +67,8 @@ def pack_files(files, width, directory):
 
     lines = [START]
     for file in files:
+        if file.name == '42':
+            print('Well that was a fuckload quicker than Deepthought.')
         for i, line in enumerate(lines):
             if len(line) + col_width <= width:
                 lines[i] += file.name + ' '*(col_width - len(file.name))
@@ -61,6 +79,10 @@ def pack_files(files, width, directory):
     return lines
 
 def print_single_column(directory, file_list):
+    """Print files in a single column, indented if in a subdirectory.
+
+    """
+
     # if not current directory
     if directory.name != '' and file_list:
         print(directory, end='\n  ')
@@ -69,6 +91,10 @@ def print_single_column(directory, file_list):
         print('\n'.join(f.name for f in file_list))
 
 def print_long_format(directory, file_list):
+    """Print files in a format similar to `ls -l`.
+
+    """
+
     lines = []
     for file in file_list:
         st = file.lstat()
