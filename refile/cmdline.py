@@ -1,9 +1,10 @@
-import sys
+"""Setup the command line user interface."""
 import argparse
 from . import engine
 
 
 def setup_all_share(parser):
+    """Setup options which all programs share."""
     parser.add_argument(
         '-r', '--recurse',
         action='store_true',
@@ -36,6 +37,7 @@ def setup_all_share(parser):
 
 
 def setup_mvrm_share(parser):
+    """Setup options which ls does not use."""
     parser.add_argument(
         '-d', '--directories',
         action='store_true',
@@ -54,6 +56,7 @@ def setup_mvrm_share(parser):
 
 
 def setup_print(subparsers, parents):
+    """Setup ls subcommand."""
     print_cmd = subparsers.add_parser(
         'ls',
         help='print the names of files which match the regex pattern',
@@ -80,6 +83,7 @@ def setup_print(subparsers, parents):
 
 
 def setup_rename(subparsers, parents):
+    """Setup mv subcommand."""
     rename = subparsers.add_parser(
         'mv',
         help='rename matching files according to replace string',
@@ -107,6 +111,7 @@ def setup_rename(subparsers, parents):
 
 
 def setup_delete(subparsers, parents):
+    """Setup rm subcommand."""
     delete = subparsers.add_parser(
         'rm',
         help='delete files which match the regex',
@@ -123,6 +128,7 @@ def setup_delete(subparsers, parents):
 
 
 def main():
+    """Main UI logic."""
     parser = argparse.ArgumentParser(
         description="""Interact with files whose names match regular
         expressions. See `pydoc refile` for comprehensive documentation."""

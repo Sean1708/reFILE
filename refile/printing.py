@@ -1,3 +1,4 @@
+"""Handle any printing functionality of the program."""
 # the future statement in __init__.py isn't picked up for some reason
 from __future__ import print_function
 import datetime
@@ -9,37 +10,25 @@ import os
 
 
 def print_err(msg='unknown error', **kwargs):
-    """Print errors.
-
-    """
-
+    """Print errors."""
     ERROR = '\033[31mError:\033[0m'
     print(ERROR, msg, **kwargs)
 
 
 def print_warn(msg='unknown warning', **kwargs):
-    """Print warnings.
-
-    """
-
+    """Print warnings."""
     WARNING = '\033[33mWarning:\033[0m'
     print(WARNING, msg, **kwargs)
 
 
 def print_info(msg='well this isn\'t particularly helpful', **kwargs):
-    """Print information.
-
-    """
-
+    """Print information."""
     INFO = '\033[34mInfo:\033[0m'
     print(INFO, msg, **kwargs)
 
 
 def print_files(directory, file_list):
-    """Print files as either a single column or multiple columns.
-
-    """
-
+    """Print files as either a single column or multiple columns."""
     # get_terminal_size is new in 3.3
     if sys.version_info[:2] < (3, 3):
         return print_single_column(directory, file_list)
@@ -54,6 +43,7 @@ def print_files(directory, file_list):
         print(directory)
     print('\n'.join(print_list))
 
+
 def pack_files(files, width, directory):
     """Sort files into columns.
 
@@ -61,7 +51,6 @@ def pack_files(files, width, directory):
     the largest filename length.
 
     """
-
     START = '  ' if directory.name != '' else ''
     col_width = max(len(f.name) for f in files) + 5
 
@@ -78,11 +67,9 @@ def pack_files(files, width, directory):
 
     return lines
 
+
 def print_single_column(directory, file_list):
-    """Print files in a single column, indented if in a subdirectory.
-
-    """
-
+    """Print files in a single column, indented if in a subdirectory."""
     # if not current directory
     if directory.name != '' and file_list:
         print(directory, end='\n  ')
@@ -90,11 +77,9 @@ def print_single_column(directory, file_list):
     elif file_list:
         print('\n'.join(f.name for f in file_list))
 
+
 def print_long_format(directory, file_list):
-    """Print files in a format similar to `ls -l`.
-
-    """
-
+    """Print files in a format similar to `ls -l`."""
     lines = []
     for file in file_list:
         st = file.lstat()
