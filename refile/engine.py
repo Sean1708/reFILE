@@ -4,8 +4,13 @@ import os
 import sys
 import pathlib
 import datetime
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
 from . import printing as prt
-from collections import OrderedDict
 
 
 class Matcher:

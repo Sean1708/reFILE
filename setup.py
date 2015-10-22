@@ -9,11 +9,17 @@ if sys.version_info[:2] < (3, 4):
     install_requires.append('pathlib')
 # argparse is not in 2.6 or lower
 if sys.version_info[:2] < (2, 7):
+    install_requires.append('ordereddict')
     install_requires.append('argparse')
 # it's not in 3.1 either
 elif sys.version_info[1] < 2:
     install_requires.append('argparse')
 
+if sys.version_info < (2, 7):
+    import unittest  # noqa
+    if 'nosetests' in sys.argv:
+        import unittest2
+        sys.modules['unittest'] = unittest2
 
 setup(
     name=refile.__title__,
