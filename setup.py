@@ -6,7 +6,7 @@ from setuptools import setup
 install_requires = ['nose']
 # pathlib is new to std lib in 3.4
 if sys.version_info[:2] < (3, 4):
-    install_requires.append('pathlib')
+    install_requires.append('pathlib2')
 # argparse is not in 2.6 or lower
 if sys.version_info[:2] < (2, 7):
     install_requires.append('ordereddict')
